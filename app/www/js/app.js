@@ -48,6 +48,12 @@ angular.module('starter', ['ionic','starter.controllers'])
         templateUrl: '/html/avatar.html'
     })
 
+    .state('moves', {
+        url: '/moves',
+        templateUrl: '/html/moves.html',
+        controller: 'MovesCtrl'
+    })
+
     $urlRouterProvider.otherwise('/home');
 
 });
