@@ -4,21 +4,20 @@ Robot poppy-torso written in python, offering a rest api & primitives to be used
 ## Installation
 
 ### Anaconda 2 [Download](https://www.continuum.io/downloads)
--Install anaconda for python 2.7 (Poppy python dev version)
+- Install anaconda for python 2.7 (Poppy python dev version)
 
 ### Poppy [Installation doc](https://docs.poppy-project.org/en/installation/install-poppy-softwares.html)
--pip install poppy-torso --user -U
+- `pip install poppy-torso --user -U`
 
 
 ### Python depedencies
--pip install pypot
--pip install pygame
--pip install gtts
--pip install speechrecognition
--pip install boto3
+- `pip install pypot`
+- `pip install pygame`
+- `pip install gtts`
+- `pip install speechrecognition`
+- `pip install boto3`
 
 ### Any other depedencies (working on a cleaner way)
-- cd poppy/
 ```
 $ python
 >>> import cherry
@@ -27,8 +26,9 @@ $ python
 
 ## Usage
 
-1. cd poppy/
+1. 
 ```
+$ cd poppy/
 $ sudo python
 >>> import threading
 >>> from cherry import Cherry
@@ -44,8 +44,9 @@ $ sudo python
 
 ## Usage avec le server
 
-1. cd poppy/
+1. 
 ```
+$ cd poppy/
 $ sudo python
 >>> import threading
 >>> import requests
