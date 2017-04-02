@@ -55,6 +55,12 @@ angular.module('starter', ['ionic','starter.controllers','ngDraggable'])
         controller: 'ChoregraphyCtrl'
     })
 
+    .state('moves', {
+        url: '/moves',
+        templateUrl: '/html/moves.html',
+        controller: 'MovesCtrl'
+    })
+
     $urlRouterProvider.otherwise('/home');
 
 });

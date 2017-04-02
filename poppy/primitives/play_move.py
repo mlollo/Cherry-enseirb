@@ -14,10 +14,10 @@ from pprint import pprint
 class PlayMove(pypot.primitive.Primitive):
 
 	properties = pypot.primitive.Primitive.properties + ['movement']
-	def __init__(self, robot, movement = None):
+	def __init__(self, robot, movement):
 		
 			pypot.primitive.Primitive.__init__(self, robot)
-			self._movement  = None
+			self._movement  = movement
 			self._robot = robot
 
 	#def start(self, text):
@@ -36,17 +36,19 @@ class PlayMove(pypot.primitive.Primitive):
 	@property
 	def movement(self):
 		return self._movement
-	@movement.setter
-	def movement(self, movement):
+		
+	# @movement.setter
+	# def movement(self, movement):
 
-		#if type(movement) == 'dict':
-			#print "Ceci est un dict"
-		print type(movement)
-		#movement.encode('utf-8')
-		pprint(movement)
-		m = Move.create(movement)
-		print type(m)
-		self._movement = m
-		#else:
-		#	print "Ceci est une chaine de caractère"
-		#	print movement
+	# 	# #if type(movement) == 'dict':
+	# 	# 	#print "Ceci est un dict"
+	# 	# print type(movement)
+	# 	# #movement.encode('utf-8')
+	# 	# pprint(movement)
+	# 	# m = Move.create(movement)
+	# 	# print type(m)
+	# 	# self._movement = m
+	# 	# #else:
+	# 	# #	print "Ceci est une chaine de caractère"
+	# 	# #	print movement
+	

@@ -1,10 +1,11 @@
 import numpy
 import os
+import glob
 import threading
 import time
 import requests
 import json
-
+import time
 
 from pypot.server.httpserver import HTTPRobotServer
 
@@ -16,62 +17,62 @@ from attach_primitive import attach_primitives
 
 from pypot.robot import from_json
 
+from pypot.primitive.move import MoveRecorder
+
+from moves.movePlayer import PlayMove
+
 
 class Cherry(AbstractPoppyCreature):
+         
     @classmethod
-    def setup(cls, config):
-        
+    def setup(cls):
         print "Robot setup started :"
         try:
-            robot = from_json(config)
+            cls.robot = from_json('config/torso.json')
         except:
             print "Unable to configure the robot"
         else:
             print "Robot configuration successful !"
         print "Starting motors configuration"
-            
-        for m in robot.motors:
+
+        for m in cls.robot.motors:
             m.compliant_behavior = 'dummy'
             m.goto_behavior = 'minjerk'
             m.moving_speed = 70
         
-        for m in robot.motors:
+        for m in cls.robot.motors:
             m.compliant = False
             m.goal_position = 0
             print m
 
-        for m in robot.head:
+        for m in cls.robot.head:
             m.compliant = True
-
         try:
-            attach_primitives(robot)
+            attach_primitives(cls.robot)
         except:
             print "Primitives not attached "
         else:
             print "Primitives attached successfully"
 
         try:
-            robot.test_gtts.start()
+            cls.robot.test_gtts.start()
         except:
             print "Something goes wrong with gTTS"
         else:
             print "gTTS OP"
-        return robot
+        return cls.robot
 
-        #   try:
-        # robot.send_ip.start(name)
-        #   except:
-        # print "Unable to send ip to the server"
-
-        # robot._primitive_manager._filter = partial(numpy.sum, axis=0)
-        #cls._name = "cherry" # Doesn't work, i have to find why
-        # name = "cherry"
-        # if False:
-        #     cls.vrep_hack(robot)
     @classmethod
-    def serve(cls,robot,ip):
+    def serve(cls):
+        json_data = open('./config/conf.json')
+        data = json.load(json_data)
+        json_data.close()
+        
+        ip = data['robot']['addr']
+        port = data['robot']['port']
+        
         try:
-            server = HTTPRobotServer(robot, host=ip, port=8000)
+            server = HTTPRobotServer(cls.robot, str(ip), str(port))
         except:
             print "Unable to create server object"
         else:
@@ -82,22 +83,86 @@ class Cherry(AbstractPoppyCreature):
             print "Unable to start server"
         else:
             print "server started successfully"
+
     @classmethod
-    def connect(cls,server_ip):
-        name = "kevin"
+    def connect(cls):
+        json_data = open('./config/conf.json')
+        data = json.load(json_data)
+        json_data.close()
+
+        ip = data['server']['addr']
+        port = data['server']['port']
+        name = data['robot']['name']
+
         print "Starting to ping the server"
 
-        response = os.system("ping -c 1 " + server_ip)
+        response = os.system("ping -c 1 " + str(ip))
         if response != 0:
             while response != 0:
-                response = os.system("ping -c 1 " + server_ip)
+                response = os.system("ping -c 1 " + str(ip))
                 time.sleep(5)
 
-        print "http://"+server_ip+":8080/setup?id="+name
-        
+        url = "http://"+str(ip)+":"+str(port)+"/setup?id="+str(name)
+        print url
         try: 
-            requests.get("http://"+ip+":8080/setup?id="+name)
+            requests.get(url)
         except:
             print "Request error"
+    
+    @classmethod
+    def learn(cls):
+        move = MoveRecorder(cls.robot,50,cls.robot.motors)
+        cls.robot.compliant = True
+        raw_input("Press any key to start recording a Move.")
+        move.start()
+        raw_input("Press again to stop the recording.")
+        move.stop()
+
+        for m in cls.robot.motors:
+            m.compliant = False
+            m.goal_position = 0
+
+        print "List of already taken primitives : "
+
+        os.chdir('./moves')
+        for file in glob.glob("*.move"):
+            print(os.path.splitext(file)[0])
+        os.chdir('../')
+
+        move_name = raw_input("Enter the name of this sick move : ")
+        move_name = move_name+".move"
+
+        with open("./moves/"+move_name, 'w') as f:
+            try:
+                move.move.save(f)
+            except:
+                print "Unable to save this move, sorry"
+            else:
+                print "Move successfully saved !"
+        try:
+            cls.robot.attach_primitive(PlayMove(cls.robot,movement=move_name),move_name)
+        except Exception as e:
+            raise
+        else:
+            print "Move successfully attached to the robot !"
+        finally:
+            pass
+            
+    @classmethod
+    def forget(cls,move_name):
+        raw_input("Are you sure ? Press any key to deletethis move")
+        try:
+            os.remove("./moves/"+move_name+".move")
+        except Exception as e:
+            raise
+        else:
+            print move_name+" successfully forgotten !"
+        finally:
+            pass
+
+
+
+
+
 
 
