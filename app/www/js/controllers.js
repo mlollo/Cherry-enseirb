@@ -20,13 +20,13 @@ angular.module('starter.controllers', [])
 
 .controller('MovesCtrl', function($scope, $http) {
 
-  $http.get('data/UrlMoves.json').success(function (data) {
-    $scope.primitives = data.url;
-  })
-  $scope.run_move = function(index) {
-    $scope.order = index;
-      $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
-  };
+    $http.get('data/UrlMoves.json').success(function (data) {
+        $scope.primitives = data.url;
+    })
+    $scope.run_move = function(index) {
+        $scope.order = index;
+        $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
+    };
 
 })
 
@@ -147,7 +147,7 @@ angular.module('starter.controllers', [])
 
 
 
-//- Contrôle du drag & drop -->
+    //- Contrôle du drag & drop -->
     $scope.centerAnchor = true;
     $scope.toggleCenterAnchor = function () {
         $scope.centerAnchor = !$scope.centerAnchor
@@ -161,11 +161,16 @@ angular.module('starter.controllers', [])
     $scope.$on('draggable:end', onDraggableEvent);
     $scope.droppedObjects1 = [];
     $scope.droppedObjects2 = [];
+    $scope.droppedObjects3 = [];
+    $scope.droppedObjects4 = [];
     $scope.onDropComplete1 = function (data, evt) {
         console.log("127", "$scope", "onDropComplete1", data, evt);
         var index = $scope.droppedObjects1.indexOf(data);
-        if (index == -1)
-        $scope.droppedObjects1.push(data);
+        if (index == -1 && $scope.droppedObjects1.length <1){
+            $scope.droppedObjects1.push(data);
+        }else if ($scope.droppedObjects1.length >=1) {
+            $scope.droppedObjects1[0]=data;
+        }
     }
     $scope.onDragSuccess1 = function (data, evt) {
         console.log("133", "$scope", "onDragSuccess1", "", evt);
@@ -182,8 +187,42 @@ angular.module('starter.controllers', [])
     }
     $scope.onDropComplete2 = function (data, evt) {
         var index = $scope.droppedObjects2.indexOf(data);
-        if (index == -1) {
+        if (index == -1 && $scope.droppedObjects2.length <1) {
             $scope.droppedObjects2.push(data);
+        }else if ($scope.droppedObjects2.length >=1) {
+            $scope.droppedObjects2[0]=data;
+        }
+    }
+
+
+    $scope.onDragSuccess3 = function (data, evt) {
+        var index = $scope.droppedObjects3.indexOf(data);
+        if (index > -1) {
+            $scope.droppedObjects3.splice(index, 1);
+        }
+    }
+    $scope.onDropComplete3 = function (data, evt) {
+        var index = $scope.droppedObjects3.indexOf(data);
+        if (index == -1 && $scope.droppedObjects3.length <1) {
+            $scope.droppedObjects3.push(data);
+        }else if ($scope.droppedObjects3.length >=1) {
+            $scope.droppedObjects3[0]=data;
+        }
+    }
+
+
+    $scope.onDragSuccess4 = function (data, evt) {
+        var index = $scope.droppedObjects4.indexOf(data);
+        if (index > -1) {
+            $scope.droppedObjects4.splice(index, 1);
+        }
+    }
+    $scope.onDropComplete4 = function (data, evt) {
+        var index = $scope.droppedObjects4.indexOf(data);
+        if (index == -1 && $scope.droppedObjects4.length <1) {
+            $scope.droppedObjects4.push(data);
+        }else if ($scope.droppedObjects4.length >=1) {
+            $scope.droppedObjects4[0]=data;
         }
     }
     var inArray = function (array, obj) {
