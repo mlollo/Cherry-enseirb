@@ -19,7 +19,7 @@ public class ChatterbotController{
 	@RequestMapping("/chatterbot")
 	public static void testChatterbot(@RequestParam(value="msg") String msg) throws IOException {
 		
-		System.out.println("\nRobot utilisé : " + SetupController.robotList.get(0).getName());
+		System.out.println("\nRobot utilise : " + SetupController.robotList.get(0).getName());
 		
 		//LaunchPresentation.robotsUsed = new HashSet<String>();
 		// Get the first robot connected

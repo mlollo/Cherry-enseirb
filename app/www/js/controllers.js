@@ -20,13 +20,13 @@ angular.module('starter.controllers', [])
 
 .controller('MovesCtrl', function($scope, $http) {
 
-  $http.get('data/UrlMoves.json').success(function (data) {
-    $scope.primitives = data.url;
-  })
-  $scope.run_move = function(index) {
+ $http.get("http://127.0.0.1:8080/test/primitives.json").success(function(response){
+        $scope.primitives = response.primitives;
+    });
+    $scope.run_move = function(index) {
     $scope.order = index;
       $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
-  };
+    };
 
 })
 

@@ -105,7 +105,7 @@ public class LaunchPresentation {
 		play(listBehave, listText, listImg, listRobot, listLanguage, pathToWS);
 	}
 	
-	public static void playFromJson(JSONObject myJson) throws InterruptedException, IOException {
+	public static void playFromJson(JSONObject jsonObject) throws InterruptedException, IOException {
 
 		// Disable picture display
 		enablePicture =false;
@@ -113,9 +113,7 @@ public class LaunchPresentation {
 		
 		String pathToWS = new String();
 			
-		int stepNb = myJson.length();
-		
-				
+		int stepNb = jsonObject.length();
 		
 		// Declare Arrays
 		ArrayList<String> listBehave = new ArrayList<String>();
@@ -131,7 +129,7 @@ public class LaunchPresentation {
 		
 		// try to retrieve the Path To WS for display picture
 		try{
-			pathToWS = (String) myJson.get("Path_to_WS");
+			pathToWS = (String) jsonObject.get("Path_to_WS");
 			System.out.println("\n Picture displayed at " + pathToWS);
 			
 			stepNb = stepNb -1;
@@ -146,9 +144,8 @@ public class LaunchPresentation {
 		
 		for(int i = 0; i < stepNb; i++ ) 
 		{
-			JSONObject loopJson = myJson.getJSONObject("_" + Integer.toString(i));
+			JSONObject loopJson = jsonObject.getJSONObject("_" + Integer.toString(i));
 			System.out.println("\n" + loopJson.toString() );
-			
 			
 			String behave = loopJson.getString("Behave"); 
 			String text = loopJson.getString("Text"); 

@@ -23,6 +23,19 @@ public class LaunchPrimitive {
 
 	}
 	
+	// Method to start "behave" primitives with a robot targeted
+		public static void startBehaviorPrimitive(String behavior, String url){
+			
+			try {
+				logger.info("Play Behave Primitive: " + behavior);
+				HttpConnection.sendGet(url + "/primitive/" + behavior + "/start.json");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	
 	// Method to stop "behave" primitives
 	public static void stopPrimitive(String behavior){
 		
@@ -210,7 +223,22 @@ public class LaunchPrimitive {
 		
 		return current_primitive;
 	}
-	
+		
+		// Get all primitives
+		public static String getPrimitiveList(String url){
+			
+
+	    	// Start Primitive
+	    	String current_primitive  = new String();
+			try {
+				current_primitive = HttpConnection.sendGet(url + "/primitive/list.json");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return current_primitive;
+		}
+		
 	// get Listen state of th robot
 	public static String getListenStateParameter(){
 		
@@ -347,6 +375,4 @@ public class LaunchPrimitive {
 		}	
   	
 	}*/
-	
-
 }
