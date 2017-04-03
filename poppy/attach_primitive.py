@@ -21,7 +21,7 @@ import glob
 from primitives.idle import UpperBodyIdleMotion, HeadIdleMotion, TorsoIdleMotion
 
 # Play Movement
-from moves.movePlayer import PlayMove
+from primitives.movePlayer import PlayMove
 
 # # Speak
 # from tts.speak import Speak
@@ -34,7 +34,7 @@ from moves.movePlayer import PlayMove
 # from primitives.send_ip import SendIp
 
 # Test Gtts service
-from primitives.test_gtts import TestGTTS
+# from primitives.test_gtts import TestGTTS
 
 # Screen Management (EYES)
 # from screen.eye import EyeBehave
@@ -94,9 +94,9 @@ def attach_primitives(robot, isCamera=True):
     # robot.attach_primitive(TestGTTS(robot),"test_gtts")
     
 
-    robot.attach_primitive(EyeBehave(robot),"eye_behave")
-    robot.attach_primitive(EyeAngryBehave(robot),"eye_angry_behave")
-    robot.attach_primitive(EyeHappyBehave(robot),"eye_happy_behave")
+    # robot.attach_primitive(EyeBehave(robot),"eye_behave")
+    # robot.attach_primitive(EyeAngryBehave(robot),"eye_angry_behave")
+    # robot.attach_primitive(EyeHappyBehave(robot),"eye_happy_behave")
 
-    robot.attach_primitive(Listen(robot),"listen")
+    # robot.attach_primitive(Listen(robot),"listen")
 

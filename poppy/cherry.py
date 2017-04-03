@@ -19,7 +19,7 @@ from pypot.robot import from_json
 
 from pypot.primitive.move import MoveRecorder
 
-from moves.movePlayer import PlayMove
+from primitives.movePlayer import PlayMove
 
 
 class Cherry(AbstractPoppyCreature):
