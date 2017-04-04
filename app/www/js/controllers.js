@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('HomeCtrl', function($scope,$ionicPopup){
+.controller('HomeCtrl', function($scope,$ionicPopup,$rootScope){
     // popup d'alerte
     $scope.showAlert = function() {
         var alertPopup = $ionicPopup.alert({
@@ -18,7 +18,36 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('MovesCtrl', function($scope, $http) {
+
+.controller('AvatarCtrl',function($scope,$rootScope){
+    $scope.avatars = [
+        "img/basketball.png",
+        "img/pikachu.png",
+        "img/pokeball.png",
+        "img/football.png",
+        "img/pixel-win.png",
+        "img/pixel.png",
+        "img/pixel-sitting.png",
+        "img/pixel-love.png",
+        "img/pixel-computer.png",
+    ]
+
+    $scope.imageAvatar = "img/pixel-sitting.png";
+
+    $scope.onTap = function (evt) {
+        $scope.imageAvatar = $scope.avatars[evt];
+        $rootScope.$broadcast("onTap", $scope.imageAvatar );
+
+    }
+
+    $scope.$on("onTap", function (evt, data) {
+        $rootScope.avatar=data;
+    });
+})
+
+
+
+.controller('MovesCtrl', function($scope, $http,$rootScope) {
 
     $http.get('data/UrlMoves.json').success(function (data) {
         $scope.primitives = data.url;
@@ -29,7 +58,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('AccountCtrl', function($scope, $ionicModal,$ionicPopup) {
+.controller('AccountCtrl', function($scope, $ionicModal,$ionicPopup,$rootScope) {
     $scope.settings = {
         enableFriends: false
     };
@@ -61,7 +90,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('WeatherCtrl', function($scope, $http, OpenWeatherConfig, $ionicPopup) {
+.controller('WeatherCtrl', function($scope, $http, OpenWeatherConfig, $ionicPopup,$rootScope) {
     $scope.search = '';
     $scope.state = false;
     $scope.weatherData = {
@@ -98,7 +127,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('ChoregraphyCtrl', function($scope, $ionicPopup, $http, $timeout) {
+.controller('ChoregraphyCtrl', function($scope, $ionicPopup, $http, $timeout,$rootScope) {
     $scope.music = '/music/Magic_sys_FOU.mp3';
     $scope.music1Disabled = false;
     $scope.music2Disabled = false;
