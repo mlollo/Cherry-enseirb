@@ -128,6 +128,7 @@ angular.module('starter.controllers', [])
         audio.pause();
         audio = new Audio($scope.music);
         audio.play();
+        
     };
 
     $scope.setMagic = function() {
