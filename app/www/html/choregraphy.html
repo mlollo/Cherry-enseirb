@@ -20,9 +20,9 @@
         <h2>Welcome to choregraphy PAGE</h2>
         <p>
             <h3>Choisi ta musique</h3>
-            <button class=" button button-positive" ng-disabled="magicDisabled" ng-click="setMagic()">Magic system - Tu est fou !</button>
-            <button class="button button-positive" ng-disabled="feelingsDisabled" ng-click="setFeelings()">Steam Phunk - Feelings</button>
-            <button class="button button-positive" ng-disabled="pitchDisabled" ng-click="setPitch()">Bad pitched - Insanelike</button>
+            <button class=" button button-positive" ng-disabled="music1Disabled" ng-click="setMusic1()">Magic system - Tu est fou !</button>
+            <button class="button button-positive" ng-disabled="music2Disabled" ng-click="setMusic2()">Steam Phunk - Feelings</button>
+            <button class="button button-positive" ng-disabled="music3Disabled" ng-click="setMusic3()">Bad pitched - Insanelike</button>
 
         </p>
 
@@ -34,17 +34,20 @@
                 <!-- Draggable objects -->
                 <ul class="draggable-objects">
                     <li ng-if="true">
-                        <div ng-drag="true" ng-drag-data="{name:'img/pixel-sitting.png'}" data-allow-transform="true"> 
+
+
+                        <div ng-drag="true" ng-drag-data="{name:'img/pixel-sitting.png' ,primitive:'left_arm_up_behave'}" data-allow-transform="true">
+
                             <img src="img/pixel-sitting.png" width="80" height="80">
                         </div>
                     </li>
                     <li ng-if="true">
-                        <div ng-drag="true" ng-drag-data="{name:'img/football.png'}" data-allow-transform="true">
+                        <div ng-drag="true" ng-drag-data="{name:'img/football.png',primitive:'question_behave'}" data-allow-transform="true">
                             <img src="img/football.png" width="80" height="80">
                         </div>
                     </li>
                     <li ng-if="true">
-                        <div ng-drag="true" ng-drag-data="{name:'img/pixel-computer.png'}" data-allow-transform="true">
+                        <div ng-drag="true" ng-drag-data="{name:'img/pixel-computer.png',primitive:'hunkers_behave'}" data-allow-transform="true">
                             <img src="img/pixel-computer.png" width="80" height="80">
                         </div>
                     </li>
@@ -60,6 +63,7 @@
 
                             <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}" >
                                 <img ng-src="{{obj.name}}" width="80" height="80">
+
                             </div>
                         </div>
                     </div>
@@ -112,6 +116,7 @@
 
         </div>
     </p>
+
 
 
 

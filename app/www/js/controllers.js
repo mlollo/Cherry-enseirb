@@ -20,6 +20,7 @@ angular.module('starter.controllers', [])
 
 .controller('MovesCtrl', function($scope, $http) {
 
+<<<<<<< HEAD
 
 
   $http.get("http://localhost:8080/primitives.json").success(function(response)
@@ -35,6 +36,14 @@ angular.module('starter.controllers', [])
 
       $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
   };
+=======
+    $http.get('data/UrlMoves.json').success(function (data) {
+        $scope.primitives = data.url;
+    })
+    $scope.run_move = function(index) {
+        $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
+    };
+>>>>>>> 91d9cfaed31fbe8b0ee5348b6ca57a752924b6f0
 
 })
 
@@ -109,9 +118,9 @@ angular.module('starter.controllers', [])
 
 .controller('ChoregraphyCtrl', function($scope, $ionicPopup) {
     $scope.music = '/music/Magic_sys_FOU.mp3';
-    $scope.magicDisabled = false;
-    $scope.feelingsDisabled = false;
-    $scope.pitchDisabled = false;
+    $scope.music1Disabled = false;
+    $scope.music2Disabled = false;
+    $scope.music3Disabled = false;
 
     var audio = new Audio($scope.music);
 
@@ -128,30 +137,36 @@ angular.module('starter.controllers', [])
         audio.pause();
         audio = new Audio($scope.music);
         audio.play();
+<<<<<<< HEAD
         
+=======
+
+        $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects1[0].primitive);
+
+>>>>>>> 91d9cfaed31fbe8b0ee5348b6ca57a752924b6f0
     };
 
-    $scope.setMagic = function() {
+    $scope.setMusic1 = function() {
         $scope.music='/music/Magic_sys_FOU.mp3';
-        $scope.magicDisabled = true;
-        $scope.feelingsDisabled = false;
-        $scope.pitchDisabled = false;
+        $scope.music1Disabled = true;
+        $scope.music2Disabled = false;
+        $scope.music3Disabled = false;
 
     };
 
-    $scope.setFeelings = function() {
+    $scope.setMusic2 = function() {
         $scope.music='/music/Steam_Phunk-Feelings.mp3';
-        $scope.feelingsDisabled = true;
-        $scope.magicDisabled = false;
-        $scope.pitchDisabled = false;
+        $scope.music2Disabled = true;
+        $scope.music1Disabled = false;
+        $scope.music3Disabled = false;
 
     };
 
-    $scope.setPitch = function() {
+    $scope.setMusic3 = function() {
         $scope.music='/music/Bad_pitched.mp3';
-        $scope.magicDisabled = false;
-        $scope.feelingsDisabled = false;
-        $scope.pitchDisabled = true;
+        $scope.music1Disabled = false;
+        $scope.music2Disabled = false;
+        $scope.music3Disabled = true;
     };
 
 
