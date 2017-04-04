@@ -5,7 +5,6 @@ import threading
 import time
 import requests
 import json
-import time
 
 from pypot.server.httpserver import HTTPRobotServer
 
@@ -72,7 +71,7 @@ class Cherry(AbstractPoppyCreature):
         port = data['robot']['port']
         
         try:
-            server = HTTPRobotServer(cls.robot, str(ip), str(port))
+            server = HTTPRobotServer(cls.robot, host=str(ip), port=str(port))
         except:
             print "Unable to create server object"
         else:

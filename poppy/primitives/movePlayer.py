@@ -13,8 +13,7 @@ from pprint import pprint
 
 class PlayMove(pypot.primitive.Primitive):
 
-	properties = pypot.primitive.Primitive.properties + ['movement']
-	def __init__(self, robot, movement="test"):
+	def __init__(self, robot, movement=None):
 			self.move  = movement
 			self.robot = robot
 			pypot.primitive.Primitive.__init__(self,robot)
