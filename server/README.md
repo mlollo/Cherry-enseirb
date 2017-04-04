@@ -3,6 +3,8 @@ Cloud controller written in java & spring using Gradle
 
 ## Installation
 
+### Java version
+ - sudo apt-get install default-jdk
 ### Eclipse [Download page](https://www.eclipse.org/downloads/)
 - install eclipse neon
 - go to help/markeplace & install Buildship Gradle then Restart Eclipse
@@ -18,7 +20,7 @@ Cloud controller written in java & spring using Gradle
 	4. sdk install gradle 3.4.1
 Done !
 
-## Usage 
+## Usage
 
 ### Eclipse
 - right click on project run as/java application/Cherry.application(NOT tomcat !)
@@ -32,11 +34,11 @@ Done !!
 - gradle build
 - java -jar build/libs/cherry-rest-service-X.X.X.jar
 - Ctrl+C to stop
-Done 
+Done
 
 - Open your favorite web browser ( not Internet Explorer plz... )
 - go to localhost:8080
 
 ### End points
 
-COMMING SOON !!! 
+COMMING SOON !!!

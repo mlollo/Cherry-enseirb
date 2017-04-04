@@ -36,7 +36,9 @@
                     <li ng-if="true">
 
 
+
                         <div ng-drag="true" ng-drag-data="{name:'img/pixel-sitting.png' ,primitive:'al'}" data-allow-transform="true">
+
 
                             <img src="img/pixel-sitting.png" width="80" height="80">
                         </div>
@@ -47,7 +49,13 @@
                         </div>
                     </li>
                     <li ng-if="true">
-                        <div ng-drag="true" ng-drag-data="{name:'img/pixel-computer.png',primitive:'dab2'}" data-allow-transform="true">
+
+                        <div ng-drag="true" ng-drag-data="{name:'img/pokeball.png',primitive:'dab2'}" data-allow-transform="true">
+                            <img src="img/pokeball.png" width="80" height="80">
+                        </div>
+                    </li>
+                    <li ng-if="true">
+                        <div ng-drag="true" ng-drag-data="{name:'img/pixel-computer.png',primitive:'harden'}" data-allow-transform="true">
                             <img src="img/pixel-computer.png" width="80" height="80">
                         </div>
                     </li>
@@ -70,7 +78,6 @@
 
 
                     <div class="col">
-
                         <div ng-drop="true" ng-drop-success="onDropComplete2($data,$event)">
                             <span class="title">Move #2</span>
 
@@ -80,8 +87,8 @@
                         </div>
                     </div>
 
-                    <div class="col">
 
+                    <div class="col">
                         <div ng-drop="true" ng-drop-success="onDropComplete3($data,$event)">
                             <span class="title">Move #3</span>
 
@@ -91,8 +98,8 @@
                         </div>
                     </div>
 
-                    <div class="col">
 
+                    <div class="col">
                         <div ng-drop="true" ng-drop-success="onDropComplete4($data,$event)">
                             <span class="title">Move #4</span>
 
@@ -116,15 +123,6 @@
 
         </div>
     </p>
-
-
-
-
-
-
-
-
-
 
 
 </ion-content>
