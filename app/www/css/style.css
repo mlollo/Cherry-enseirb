@@ -58,7 +58,7 @@ input[type="text"] {
 }
 [ng-drag] {
     width: 98px;
-    height: 98  px;
+    height: 98px;
     background: rgba(20, 0, 185, 0.5);
     color: white;
     text-align: center;
