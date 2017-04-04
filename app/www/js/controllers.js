@@ -20,12 +20,22 @@ angular.module('starter.controllers', [])
 
 .controller('MovesCtrl', function($scope, $http) {
 
-    $http.get('data/UrlMoves.json').success(function (data) {
-        $scope.primitives = data.url;
-    })
-    $scope.run_move = function(index) {
-        $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
-    };
+
+
+
+  $http.get("http://localhost:8080/primitives.json").success(function(response)
+    {
+        $scope.primitives = response.primitives;  //ajax request to fetch data into
+
+    });
+  $http.get('data/UrlMoves.json').success(function (data) {
+
+    $scope.primitives = data.url;
+  })
+  $scope.run_move = function(index) {
+
+      $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
+  };
 
 })
 
@@ -99,6 +109,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('ChoregraphyCtrl', function($scope, $ionicPopup, $http, $timeout) {
+
     $scope.music = '/music/Magic_sys_FOU.mp3';
     $scope.music1Disabled = false;
     $scope.music2Disabled = false;
@@ -124,16 +135,18 @@ angular.module('starter.controllers', [])
         audio = new Audio($scope.music);
         audio.play();
 
+
         $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects1[0].primitive);
+
         $timeout(function () {
             $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects2[0].primitive);
-        }, 3000);
+        }, 5000);
         $timeout(function () {
             $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects3[0].primitive);
-        }, 6000);
+        }, 10000);
         $timeout(function () {
             $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects4[0].primitive);
-        }, 9000);
+        }, 15000);
     };
 
     $scope.setMusic1 = function() {
