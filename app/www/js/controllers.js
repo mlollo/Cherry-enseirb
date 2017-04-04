@@ -20,7 +20,7 @@ angular.module('starter.controllers', [])
 
 .controller('MovesCtrl', function($scope, $http) {
 
-<<<<<<< HEAD
+
 
 
   $http.get("http://localhost:8080/primitives.json").success(function(response)
@@ -36,14 +36,6 @@ angular.module('starter.controllers', [])
 
       $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
   };
-=======
-    $http.get('data/UrlMoves.json').success(function (data) {
-        $scope.primitives = data.url;
-    })
-    $scope.run_move = function(index) {
-        $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
-    };
->>>>>>> 91d9cfaed31fbe8b0ee5348b6ca57a752924b6f0
 
 })
 
@@ -116,7 +108,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('ChoregraphyCtrl', function($scope, $ionicPopup) {
+.controller('ChoregraphyCtrl', function($scope, $ionicPopup, $http) {
     $scope.music = '/music/Magic_sys_FOU.mp3';
     $scope.music1Disabled = false;
     $scope.music2Disabled = false;
@@ -137,13 +129,11 @@ angular.module('starter.controllers', [])
         audio.pause();
         audio = new Audio($scope.music);
         audio.play();
-<<<<<<< HEAD
-        
-=======
+
 
         $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects1[0].primitive);
 
->>>>>>> 91d9cfaed31fbe8b0ee5348b6ca57a752924b6f0
+
     };
 
     $scope.setMusic1 = function() {
