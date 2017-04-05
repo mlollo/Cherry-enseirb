@@ -178,31 +178,26 @@ angular.module('starter.controllers', [])
     // Stop previous audio and play new audio + Play the move with http request
 
     $scope.playAudio = function() {
-        $http.get("http://localhost:8080/app/kevin/ismoving").success(function(response_server){
-        $scope.result=response_server.result;
+        $http.get("http://localhost:8080/app/kevin/ismoving").success(function(response){
+        	$scope.isMoving = response.isMoving;
         });
+		if ($scope.isMoving == "false"){
+		  var data = {
+		    id : "kevin",
+		   	list : [
+		      $scope.droppedObjects1[0].primitive,
+		      $scope.droppedObjects2[0].primitive,
+		      $scope.droppedObjects3[0].primitive,
+		      $scope.droppedObjects4[0].primitive,
+		   ]
+		  }
+		  console.log(data);
+		  $http.post("http://localhost:8080/app/chore", data);
+		  audio.pause();
+		  audio = new Audio($scope.music);
+		  audio.play();
 
-        var str1 = "true";
-        var str2 = "false";
-
-          if ($scope.result.localeCompare(str1) == 0){
-
-          }else if ($scope.result.localeCompare(str2) == 0){
-              var data = {
-                id : kevin,
-                primitives : [
-                  $scope.droppedObjects1[0].primitive,
-                  $scope.droppedObjects2[0].primitive,
-                  $scope.droppedObjects3[0].primitive,
-                  $scope.droppedObjects4[0].primitive,
-               ]
-              }
-              $http.post("http://localhost:8080/app/chore", data);
-              audio.pause();
-              audio = new Audio($scope.music);
-              audio.play();
-
-          }
+		}
 
 
 /*

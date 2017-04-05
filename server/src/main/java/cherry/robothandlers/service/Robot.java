@@ -2,12 +2,9 @@ package cherry.robothandlers.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.data.annotation.Id;
-
 //@Document(collection="robot")
 public class Robot {
-	@Id
+	//@Id
 	private String name;
 	private String ip;
 	private boolean isSpeaking;

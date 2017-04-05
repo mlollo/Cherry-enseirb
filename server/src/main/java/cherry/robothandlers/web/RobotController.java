@@ -55,6 +55,7 @@ public class RobotController {
 					String primitive = primIt.next();
 					robot.setIsMoving(true);
 					LaunchPrimitive.startBehaviorPrimitive(primitive,robot.getIp());
+					logger.info("I played the following behave : " + primitive);
 					primIt.remove();
 				}else{
 					robot.setIsMoving(false);

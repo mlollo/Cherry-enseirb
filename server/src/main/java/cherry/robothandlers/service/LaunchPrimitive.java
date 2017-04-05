@@ -29,7 +29,7 @@ public class LaunchPrimitive {
 			
 
 			try {
-				logger.info("Play Behave Primitive: " + behavior);
+				logger.info("Play Behave Primitive : " + behavior);
 				HttpConnection.sendGet(url + "/primitive/" + behavior + "/start.json");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
