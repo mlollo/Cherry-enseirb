@@ -39,6 +39,17 @@
 .input-label {
     color: #ffffff;
 }
+.avatar-button {
+    background-color: #FFFFFF;
+    border: none;
+    color: white;
+    padding: 30px 32px;
+}
+}
+
+.avatar-button:active {
+    transform: translateY(4px);
+}
 
 input[type="text"] {
     color: #FFFFFF;
