@@ -182,6 +182,7 @@ angular.module('starter.controllers', [])
         $http.get("http://localhost:8080/app/kevin/ismoving").success(function(response_server){
         $scope.result=response_server.result;
         });
+
         var str1 = "true";
         var str2 = "false";
 
