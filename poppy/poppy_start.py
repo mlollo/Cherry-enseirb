@@ -4,7 +4,11 @@ if len(sys.argv) == 4:
 	import requests
 	from cherry import Cherry
 	from pypot.server.httpserver import HTTPRobotServer
+<<<<<<< HEAD
 	robot = Cherry.setup('config.json')
+=======
+	robot = Cherry.setup()
+>>>>>>> d6a563ac690d2cf73bcc14f28e20ff7337ae7407
 	Cherry.serve(robot, str(sys.argv[1]))
 	requests.get("http://"+str(sys.argv[1])+":"+str(sys.argv[2])+"/setup?id="+str(sys.argv[3]))
 else:
