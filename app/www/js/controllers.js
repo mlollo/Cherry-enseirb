@@ -24,7 +24,7 @@ angular.module('starter.controllers', [])
         { src:'img/links--drawing.jpg', title:'Mouvements', link:'#/moves'},
     ];
     $scope.line2= [
-        { src:'img/links--gaming.jpg', title:'Jeux', link:'#/home'},
+        { src:'img/background/numbers2.jpg', title:'Calculatrice', link:'#/home'},
         { src:'img/links--drawing.jpg', title:'Jeux', link:'#/home'},
         { src:'img/links--gaming.jpg', title:'Jeux', link:'#/home'},
     ];
@@ -49,7 +49,6 @@ angular.module('starter.controllers', [])
     $scope.onTap = function (evt) {
         $scope.imageAvatar = $scope.avatars[evt];
         $rootScope.$broadcast("onTap", $scope.imageAvatar );
-
     }
 
     $scope.$on("onTap", function (evt, data) {
