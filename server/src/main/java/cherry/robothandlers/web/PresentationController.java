@@ -114,7 +114,7 @@ public class PresentationController {
 			
 			
 			
-			//LaunchPrimitive.startSpeakPrimitive("Bienvenue, au colloque consacré a la Silveur Economie et a l'habitat!");
+			//LaunchPrimitive.startSpeakPrimitive("Bienvenue, au colloque consacre a la Silveur Economie et a l'habitat!");
 			//LaunchPrimitive.startBehaviorPrimitive("rest_open_behave");
 		
 			

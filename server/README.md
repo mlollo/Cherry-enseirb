@@ -59,6 +59,133 @@ Done
 - Open your favorite web browser ( not Internet Explorer plz... )
 - go to localhost:8080
 
-### End points
+### Add mongodb to spring project with gradle [Tutorial Page](https://examples.javacodegeeks.com/enterprise-java/spring/spring-data-mongodb-example/)
+
+##### Launch MongoDB
+
+- [Install MongoDB](https://www.mongodb.com/download-center) in C:\MongoDB 
+- Create a directory C:\MongoDB\data
+- Launch MongoDB 
+```
+"C:\MongoDB\Server\3.4\bin\mongod.exe" --dbpath "C:\MongoDB\data"
+```
+
+###### Gradle
+
+- Add in in buildscript / depedencies
+```
+classpath("org.springframework.boot:spring-boot-starter-data-mongodb:1.5.2.RELEASE")
+```
+The 1.5.2 version must maybe be the same version as the gradle plugin or maybe not, don't know, don't care.
+```
+classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+```
+
+
+- Add in depedencies
+```	
+compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+testCompile("org.springframework.boot:spring-boot-starter-test")
+```
+
+##### srping-config.xml
+
+- Right click on the server project / New / Other / Spring / Spring Bean Configuration File
+- Add this lines in this file 
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+          xsi:schemaLocation=
+          "http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.2.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/mvc 
+          http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+       
+    <!-- I think this line is not necessary because we don't do any scan -->
+    <context:component-scan base-package="cherry.apphandlers.service" />
+    
+    <!-- Configure the Mongo Server -->    
+     <bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
+		<property name="host" value="localhost" />
+		<property name="port" value="27017"/>
+		<!-- Same ip and port as mongobd running app -->
+	 </bean>
+	  <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+	    <constructor-arg ref="mongo"/>
+	    <constructor-arg name="databaseName" value="your-database-name"/>
+	  </bean>
+    <mongo:repositories base-package="package-where-user.java-&-userCollection.java-is"></mongo:repositories>
+</beans>
+```
+
+##### MongoDB Syntaxe to add to the Application.java
+
+- Just add 
+```
+@SpringBootApplication
+public class Application {
+...
+}
+
+```
+
+
+##### MongoDB Syntaxe to add to User.java
+
+- Add 
+```
+@Document(collection="user")
+public class User {
+	@Id
+	protected Long userId;
+	@PersistenceConstructor
+    public User(Long userId, ...){
+    	...
+    }
+}
+```
+
+##### MongoDB Syntaxe to add to UserCollection.java
+
+- Add
+```
+@Component
+public interface UserCollection extends CrudRepository<User, Long> {
+//public interface PersonRepository extends PagingAndSortingRepository<Person, Long> {
+
+	@Query("{'lastname' : ?0}")
+	public Iterable<User> searchByLastName(String userLastName);
+
+	//Any type of search in the dataBase can be implements here
+
+}
+```
+
+##### MongoDB Syntaxe usage
+
+```
+ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("file:spring-conf.xml");
+UserCollection userCollection = context.getBean(UserCollection.class);
+			
+Iterable<User> userList = userCollection.findAll();
+String out = "Users List :\n";
+for (User u : userList){
+        out = out + u + "\n";
+}
+context.close();
+System.out.println(out);
+```
+
+
+That's it !!
+
+### END POINTS
 
 COMMING SOON !!! 
