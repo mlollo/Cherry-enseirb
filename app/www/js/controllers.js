@@ -177,10 +177,40 @@ angular.module('starter.controllers', [])
         { name:'img/pixel-computer.png',primitive:'harden'}
     ];
     // Stop previous audio and play new audio + Play the move with http request
+
     $scope.playAudio = function() {
+        $http.get("http://localhost:8080/robot/is_behave").success(function(response_server){
+        $scope.result=response_server.result;
+        });
+        var str1 = "true";
+        var str2 = "false";
+
+          if ($scope.result.localeCompare(str1) == 0){
+
+          }else if ($scope.result.localeCompare(str2) == 0){
+              var data = {
+                id : 1,
+                primitives : {
+                  move1 : $scope.droppedObjects1[0].primitive,
+                  move2 : $scope.droppedObjects2[0].primitive,
+                  move3 : $scope.droppedObjects3[0].primitive,
+                  move4 : $scope.droppedObjects4[0].primitive,
+               }
+              }
+              $http.post("http://localhost:8080/app/chore", data);
+              audio.pause();
+              audio = new Audio($scope.music);
+              audio.play();
+
+          }
+
+
+/*
         audio.pause();
         audio = new Audio($scope.music);
+
         audio.play();
+
 
         $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects1[0].primitive);
 
@@ -192,9 +222,8 @@ angular.module('starter.controllers', [])
         }, 10000);
         $timeout(function () {
             $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects4[0].primitive);
-        }, 15000);
+        }, 15000);*/
     };
-
     $scope.setMusic1 = function() {
         $scope.music='/music/Magic_sys_FOU.mp3';
         $scope.music1Disabled = true;
