@@ -1,25 +1,32 @@
 package cherry.robothandlers.web;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import cherry.gamehandlers.service.ToWebsite;
 import cherry.robothandlers.service.LaunchPresentation;
 import cherry.robothandlers.service.LaunchPrimitive;
 import cherry.robothandlers.service.Poppy;
-
 import org.apache.log4j.Logger;
+import org.json.*;
+
 
 @RestController
 public class PresentationController {
 	
 	private static Logger logger = Logger.getLogger(PresentationController.class);
-	
+
 	@RequestMapping("/presentation")
-	public Poppy startPresentation(@RequestParam(value="name", defaultValue="World") String name) {
+	public Poppy startPresentation(@RequestParam(value="name", defaultValue="World") String name) throws JsonParseException, JsonMappingException, IOException {
         
 		String info = new String();
 		//System.out.println("\n name: " + name);
@@ -77,6 +84,28 @@ public class PresentationController {
 					info = "Error trying to play Prima";
 				}
 		}
+		else if(name.toLowerCase().indexOf("app") != -1 ){
+			info = "Play App Presentation";
+
+			String jsonFilePath = "./Resources/mymove.json";
+            List<String> list = Files.readAllLines(Paths.get(jsonFilePath));
+            String text = "";
+            for (String s : list){
+            	text += s + "\t";
+            }
+            JSONObject jsonObject = new JSONObject(text);
+			try{
+				LaunchPresentation.playFromJson(jsonObject);
+				}
+				catch(IOException e){
+					System.out.println("\n Erreur" + e);
+					info = "Error trying to play App";
+				}
+				catch(InterruptedException e){
+					System.out.println("\n Erreur" + e);
+					info = "Error trying to play App";
+				}
+		}
 		else if( name.toLowerCase().indexOf("bonjour") != -1 ){
 			info = "Play Bonjour";
 			//ToWebsite.setListeningSignal("off");
@@ -85,7 +114,7 @@ public class PresentationController {
 			
 			
 			
-			//LaunchPrimitive.startSpeakPrimitive("Bienvenue, au colloque consacré a la Silveur Economie et a l'habitat!");
+			//LaunchPrimitive.startSpeakPrimitive("Bienvenue, au colloque consacre a la Silveur Economie et a l'habitat!");
 			//LaunchPrimitive.startBehaviorPrimitive("rest_open_behave");
 		
 			

@@ -1,20 +1,26 @@
 package cherry.robothandlers.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.annotation.Id;
+
+//@Document(collection="robot")
 public class Robot {
-	
+	@Id
 	private String name;
 	private String ip;
 	private boolean isSpeaking;
 	private boolean isMoving;
-	
+	private List<String> primList;
+
+	//@PersistenceConstructor
 	public Robot(){
-		
 		name = "no_name";
 		ip ="0";
 		isSpeaking = false;
-		isMoving =false;
-		
-		
+		isMoving = false;
+		setPrimList(new ArrayList<String>());
 	}
 	
 	public String getIp() {
@@ -45,6 +51,20 @@ public class Robot {
 	public void setIsMoving(boolean isMoving) {
 		this.isMoving = isMoving;
 	}
-	
 
+	public List<String> getPrimList() {
+		return primList;
+	}
+
+	public void setPrimList(List<String> primList) {
+		this.primList = primList;
+	}  
+
+
+	
+	@Override
+    public String toString()
+	{
+            return "Robot [name = " + this.getName() + ", ip = " + this.getIp() + "]";
+    }
 }

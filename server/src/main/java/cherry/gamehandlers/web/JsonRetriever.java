@@ -100,8 +100,8 @@ public class JsonRetriever {
 		  }
 		  
 		  // extraire le JSON ici
-		  // s'assurer de la dispo des robots concerné.
-		  // crée une instance de presentation
+		  // s'assurer de la dispo des robots concerne.
+		  // cree une instance de presentation
 		  // la lancer
 		  
 		  

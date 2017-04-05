@@ -3,12 +3,12 @@ package cherry.robothandlers.web;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,12 +39,11 @@ public class TestController {
 				LaunchPrimitive.startBehaviorPrimitive(behaveStr);
 			}
 			else {
-				logger.warn("A presentation is running. Please retry later");
+				logger.warn("A presentation is Running. Please retry later");
 			}
 		    return new Poppy(info);  
     }
 	
-
 	@CrossOrigin
 	@RequestMapping("/speak")
 	public Poppy testSpeak(@RequestParam (value="text", required = true) String textStr, @RequestParam (value="tts_engine", required = false, defaultValue = "null")String ttsName) 
@@ -68,7 +67,6 @@ public class TestController {
 		    return new Poppy(info);  
     }
 
-	
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, value = "/{json}")
 	public Poppy jsonReader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -87,17 +85,17 @@ public class TestController {
 		  }
 		  
 		  
-		  JSONObject myJson = new JSONObject();
+		  //JSONObject myJson = new JSONObject();
 			
 		    // Check if a proper Json
-		    try{
-			    myJson =new JSONObject((jb.toString()));
-		    }
-		    catch(Exception e){
-		    	logger.error("It's not a JSON", e);
-				info  = "Not a Json";
-				return new Poppy(info);
-			}
+		    //try{
+			    //myJson = new JSONObject((jb.toString()));
+		    //}
+		    //catch(Exception e){
+		    	//logger.error("It's not a JSON", e);
+				//info  = "Not a Json";
+				//return new Poppy(info);
+			//}
 		  
 		    //LaunchPrimitive.sendMovementToRobot(myJson.toString());
 		    //LaunchPrimitive.playMovement();
