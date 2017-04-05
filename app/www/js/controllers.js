@@ -179,7 +179,7 @@ angular.module('starter.controllers', [])
     // Stop previous audio and play new audio + Play the move with http request
 
     $scope.playAudio = function() {
-        $http.get("http://localhost:8080/robot/is_behave").success(function(response_server){
+        $http.get("http://localhost:8080/app/kevin/ismoving").success(function(response_server){
         $scope.result=response_server.result;
         });
         var str1 = "true";
@@ -189,13 +189,13 @@ angular.module('starter.controllers', [])
 
           }else if ($scope.result.localeCompare(str2) == 0){
               var data = {
-                id : 1,
-                primitives : {
-                  move1 : $scope.droppedObjects1[0].primitive,
-                  move2 : $scope.droppedObjects2[0].primitive,
-                  move3 : $scope.droppedObjects3[0].primitive,
-                  move4 : $scope.droppedObjects4[0].primitive,
-               }
+                id : kevin,
+                primitives : [
+                  $scope.droppedObjects1[0].primitive,
+                  $scope.droppedObjects2[0].primitive,
+                  $scope.droppedObjects3[0].primitive,
+                  $scope.droppedObjects4[0].primitive,
+               ]
               }
               $http.post("http://localhost:8080/app/chore", data);
               audio.pause();
