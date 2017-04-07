@@ -31,7 +31,9 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AvatarCtrl',function($scope,$rootScope){
+.controller('AvatarCtrl',function($scope,$http,$rootScope){
+
+
     $scope.avatars = [
         "img/basketball.png",
         "img/pikachu.png",
@@ -43,7 +45,6 @@ angular.module('starter.controllers', [])
         "img/pixel-love.png",
         "img/pixel-computer.png",
     ]
-
     $scope.imageAvatar = "img/pixel-sitting.png";
 
     $scope.onTap = function (evt) {
@@ -65,14 +66,18 @@ angular.module('starter.controllers', [])
         $scope.primitives = response.primitives;  //ajax request to fetch data into
 
     });
-  $http.get('data/UrlMoves.json').success(function (data) {
+  $http.get('data/testmvs.json').success(function (data) {
 
     $scope.primitives = data.url;
   })
-  $scope.run_move = function(index) {
+
+  $http.post("http://99e10ac2.ngrok.io/app/chore", data).success(function(response){
+  console.log(response);
+  });
+/*  $scope.run_move = function(index) {
 
       $http.get("http://localhost:8080/test/behave?name=" + $scope.primitives[index]);
-  };
+  };*/
 
 })
 
@@ -163,27 +168,20 @@ angular.module('starter.controllers', [])
 
     // Chargement des primitives
     $http.get('data/UrlMoves.json').success(function (data) {
-        $scope.primitives = data.url;
+        $scope.moves = data.moves;
     })
 
-    // Liste des moves
-    $scope.moves = [
-        { name:'img/pixel-sitting.png' ,primitive:'al'},
-        { name:'img/pixel-sitting.png' ,primitive:'al'},
-        { name:'img/football.png',primitive:'dab1'},
-        { name:'img/pokeball.png',primitive:'dab2'},
-        { name:'img/pixel-computer.png',primitive:'harden'},
-        { name:'img/pixel-computer.png',primitive:'harden'}
-    ];
     // Stop previous audio and play new audio + Play the move with http request
 
     $scope.playAudio = function() {
-        $http.get("http://localhost:8080/app/kevin/ismoving").success(function(response){
-        	$scope.isMoving = response.isMoving;
+
+
+        $http.get("http://7bf76f89.ngrok.io/app/Cherry/ismoving").success(function(response){
+        $scope.isMoving = response.isMoving;
         });
 		if ($scope.isMoving == "false"){
 		  var data = {
-		    id : "kevin",
+		    id : "Cherry",
 		   	list : [
 		      $scope.droppedObjects1[0].primitive,
 		      $scope.droppedObjects2[0].primitive,
@@ -192,33 +190,18 @@ angular.module('starter.controllers', [])
 		   ]
 		  }
 		  console.log(data);
-		  $http.post("http://localhost:8080/app/chore", data);
+
+      $http.post("http://7bf76f89.ngrok.io/app/chore", data).success(function(response){
+      console.log(response);
+      });
 		  audio.pause();
 		  audio = new Audio($scope.music);
 		  audio.play();
 
 		}
 
-
-/*
-        audio.pause();
-        audio = new Audio($scope.music);
-
-        audio.play();
-
-
-        $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects1[0].primitive);
-
-        $timeout(function () {
-            $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects2[0].primitive);
-        }, 5000);
-        $timeout(function () {
-            $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects3[0].primitive);
-        }, 10000);
-        $timeout(function () {
-            $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects4[0].primitive);
-        }, 15000);*/
     };
+
     $scope.setMusic1 = function() {
         $scope.music='/music/Magic_sys_FOU.mp3';
         $scope.music1Disabled = true;

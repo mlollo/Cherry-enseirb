@@ -1,22 +1,8 @@
 {
-	"url": [ "dab1"
-,
-
-	"harden"
-,
-
-	"question_behave"
-,
-
-	"double_me_behave"
-,
-
-	"swap_behave"
-,
-
-	"left_arm_up_behave"
-,
-
-	"hunkers_behave"
-]
+	"moves": [
+					{ "name":"img/pixel-sitting.png" ,"primitive":"al"},
+					{ "name":"img/football.png","primitive":"dab1"},
+					{ "name":"img/pokeball.png","primitive":"dab2"},
+					{ "name":"img/pixel-computer.png","primitive":"harden"}
+	]
 }
