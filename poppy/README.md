@@ -10,7 +10,7 @@ Robot poppy-torso written in python, offering a rest api & primitives to be used
 - pip install poppy-torso --user -U
 
 #### On windows 
-- install all basic anaconda package (preferably on an admin command prompt) with :
+- Before installing poppy-torso, install all basic anaconda package (preferably on an admin command prompt) with :
 - conda install numpy scipy notebook jupyter matplotlib
 
 
