@@ -56,7 +56,6 @@ angular.module('starter', ['ionic','starter.controllers','ngDraggable'])
         url: '/avatar',
         templateUrl: 'html/avatar.html',
         controller: 'AvatarCtrl'
-
     })
 
     .state('choregraphy', {
@@ -69,6 +68,11 @@ angular.module('starter', ['ionic','starter.controllers','ngDraggable'])
         url: '/moves',
         templateUrl: 'html/moves.html',
         controller: 'MovesCtrl'
+    })
+    .state('calcul', {
+        url: '/calcul',
+        templateUrl: 'html/calcul.html',
+        controller: 'CalculCtrl'
     })
 
     $urlRouterProvider.otherwise('/home');

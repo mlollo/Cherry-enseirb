@@ -5,12 +5,15 @@ import threading
 import time
 import requests
 import json
+import pygame
 
 from pypot.server.httpserver import HTTPRobotServer
 
+from pypot.server.zmqserver import ZMQRobotServer
+
 from functools import partial
 
-from poppy.creatures import AbstractPoppyCreature
+from pypot.creatures import AbstractPoppyCreature
 
 from attach_primitive import attach_primitives
 
@@ -20,6 +23,8 @@ from pypot.primitive.move import MoveRecorder
 
 from primitives.movePlayer import PlayMove
 
+from speak import SayFR, SayEN
+
 
 class Cherry(AbstractPoppyCreature):
          
@@ -28,10 +33,15 @@ class Cherry(AbstractPoppyCreature):
         print "Robot setup started :"
         try:
             cls.robot = from_json('config/torso.json')
-        except:
-            print "Unable to configure the robot"
+        except Exception as e:
+            try:
+                cls.robot = from_json('config/torso.json')
+            except Exception as e:
+                print "Unable to configure the robot"
+                raise
         else:
             print "Robot configuration successful !"
+
         print "Starting motors configuration"
 
         for m in cls.robot.motors:
@@ -53,12 +63,17 @@ class Cherry(AbstractPoppyCreature):
         else:
             print "Primitives attached successfully"
 
+
+        # Attach Gtts
         try:
-            cls.robot.test_gtts.start()
-        except:
+            cls.robot.attach_primitive(SayFR(cls.robot), 'say_fr')
+            cls.robot.attach_primitive(SayEN(cls.robot), 'say_en')
+        except Exception as e:
             print "Something goes wrong with gTTS"
+            raise
         else:
-            print "gTTS OP"
+            print "gTTS attached successfully"
+
         return cls.robot
 
     @classmethod

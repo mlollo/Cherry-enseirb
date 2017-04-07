@@ -6,8 +6,12 @@ Robot poppy-torso written in python, offering a rest api & primitives to be used
 ### Anaconda 2 [Download](https://www.continuum.io/downloads)
 - Install anaconda for python 2.7 (Poppy python dev version)
 
-### Poppy [Installation doc](https://docs.poppy-project.org/en/installation/install-poppy-softwares.html)
+### Poppy [Installation doc](https://docs.poppy-project.org/en/installation/install-poppy-softwares.html
 - pip install poppy-torso --user -U
+
+#### On windows 
+- Before installing poppy-torso, install all basic anaconda package (preferably on an admin command prompt) with :
+- conda install numpy scipy notebook jupyter matplotlib
 
 
 ### Python depedencies
@@ -47,6 +51,12 @@ $ sudo python
 ## API [source](https://github.com/poppy-project/pypot/blob/master/REST-APIs.md)
 
 ### Primitives
+
+>>>  localhost:8000/primitive/say_fr/method/start/args.json
+#### header
+content-type : application/json
+#### body
+{"text":"Bonjour"}
 
 |  | HTTP | JSON | Example of answer |
 |-----------------------------------|:-------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------:|
