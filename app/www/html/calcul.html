@@ -1,0 +1,49 @@
+<ion-view title="{{navTitle}}">
+
+    <!--Nav Buttons left-->
+    <ion-nav-buttons side="left">
+        <button class="button button-small button-icon icon ion-ios-home" onclick="window.location.href='#/home'"></button>
+
+        <button class="button button-small button-icon" onclick="window.location.href='#/avatar'">
+            <img border="0" alt="avatar" src="{{avatar}}"  width="50" height="50">
+        </button>
+    </ion-nav-buttons>
+
+
+    <!--Nav Buttons right-->
+    <ion-nav-buttons side="right">
+        <button class="button button-small button-icon icon ion-help" ng-click="showAlert()"></button>
+        <button class="button button-small button-icon icon ion-ios-gear" onclick="window.location.href='#/account'"></button>
+    </ion-nav-buttons>
+
+
+    <ion-content class="padding">
+        <h1 class="Welcoming-title">Bienvenue sur le jeu de la calculatrice</h1>
+
+        <div class="container">
+            <img src="img/calculatrice/niveau1.png" onmouseover="this.src='img/calculatrice/niveau1_on.png'" onmouseout="this.src='img/calculatrice/niveau1.png'"  href="" ng-click="niveau(1)"></img>
+            <img src="img/calculatrice/niveau2.png" onmouseover="this.src='img/calculatrice/niveau2_on.png'" onmouseout="this.src='img/calculatrice/niveau2.png'"  href="" ng-click="niveau(2)"></img>
+            <img src="img/calculatrice/niveau3.png" onmouseover="this.src='img/calculatrice/niveau3_on.png'" onmouseout="this.src='img/calculatrice/niveau3.png'"  href="" ng-click="niveau(3)"></img>
+
+            <br/>
+            {{level}}
+
+            <h4> Calcul : {{nb1_e}} {{operateur_e}} {{nb2_e}} </h4>
+            <h4> Résultat :
+                <input class="calcul" type="text" placeholder="Entrez le résultat" ng-model="result_e" style="border:solid 1px black; border-radius:5px; text-align:center; " />
+                <img src="img/calculatrice/valider.jpg" ng-click="popup(result_e)"/>
+            </h4>
+
+
+
+            {{test}}
+            Score : {{score}} / {{total}}
+
+
+
+
+
+
+            <div>
+            </ion-content>
+        </ion-view>
