@@ -48,6 +48,12 @@ $ sudo python
 
 ### Primitives
 
+>>>  localhost:8000/primitive/say_fr/method/start/args.json
+#### header
+content-type : application/json
+#### body
+{"text":"Bonjour"}
+
 |  | HTTP | JSON | Example of answer |
 |-----------------------------------|:-------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------:|
 | Get the primitives list | GET /primitive/list.json | {"robot": {"get_primitives_list": ""}} | {'primitives': ["stand_up", "sit", "head_tracking"]} |

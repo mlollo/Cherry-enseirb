@@ -1,6 +1,8 @@
 import os
 import glob
 
+from gtts import gTTS
+
 # Perpetual Movement
 from primitives.idle import UpperBodyIdleMotion, HeadIdleMotion, TorsoIdleMotion
 
@@ -24,6 +26,8 @@ def attach_primitives(robot, isCamera=True):
     robot.attach_primitive(UpperBodyIdleMotion(robot, 50), 'upper_body_idle_motion')
     robot.attach_primitive(HeadIdleMotion(robot, 50), 'head_idle_motion')
     robot.attach_primitive(TorsoIdleMotion(robot, 50), 'torso_idle_motion')
+
+
 
 
 
