@@ -7,9 +7,11 @@ Robot poppy-torso written in python, offering a rest api & primitives to be used
 - Install anaconda for python 2.7 (Poppy python dev version)
 
 ### Poppy [Installation doc](https://docs.poppy-project.org/en/installation/install-poppy-softwares.html
-- On windows install all basic anaconda package (preferably on an admin command prompt) with :
-`conda install numpy scipy notebook jupyter matplotlib`
 - pip install poppy-torso --user -U
+
+#### On windows 
+- install all basic anaconda package (preferably on an admin command prompt) with :
+- conda install numpy scipy notebook jupyter matplotlib
 
 
 ### Python depedencies
