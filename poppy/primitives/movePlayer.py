@@ -56,7 +56,7 @@ class PlayMove(pypot.primitive.Primitive):
 
 		# send the post with the robot name request to the server
 		try: 
-			requests.post(url, data = {'name':str(name)})
+			requests.post(url, data = {'id':str(name)})
 		except:
 			print "Request error"
 		else:

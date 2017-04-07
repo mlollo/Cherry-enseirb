@@ -37,8 +37,12 @@ class Cherry(AbstractPoppyCreature):
             try:
                 cls.robot = from_json('config/torso.json')
             except Exception as e:
-                print "Unable to configure the robot"
                 raise
+            else:
+                print "Robot configuration successful !"
+            finally:
+                pass
+            raise
         else:
             print "Robot configuration successful !"
 
