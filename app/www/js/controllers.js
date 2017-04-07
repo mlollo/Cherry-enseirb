@@ -31,20 +31,19 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AvatarCtrl',function($scope,$rootScope){
-    $scope.avatars = [
-        "img/basketball.png",
-        "img/pikachu.png",
-        "img/pokeball.png",
-        "img/football.png",
-        "img/pixel-win.png",
-        "img/pixel.png",
-        "img/pixel-sitting.png",
-        "img/pixel-love.png",
-        "img/pixel-computer.png",
-    ]
+.controller('AvatarCtrl',function($scope,$rootScope,$http){
 
-    $scope.imageAvatar = "img/pixel-sitting.png";
+
+
+
+  $http.get('data/avatar.json').success(function (data) {
+      $scope.avatars = data.url;
+  })
+
+
+
+
+    $scope.imageAvatar = "img/avatar/pixel-sitting.png";
 
     $scope.onTap = function (evt) {
         $scope.imageAvatar = $scope.avatars[evt];
@@ -257,12 +256,12 @@ angular.module('starter.controllers', [])
 
     // Liste des moves
     $scope.moves = [
-        { name:'img/pixel-sitting.png' ,primitive:'al'},
-        { name:'img/pixel-sitting.png' ,primitive:'al'},
-        { name:'img/football.png',primitive:'dab1'},
-        { name:'img/pokeball.png',primitive:'dab2'},
-        { name:'img/pixel-computer.png',primitive:'harden'},
-        { name:'img/pixel-computer.png',primitive:'harden'}
+        { name:'img/avatar/pixel-sitting.png' ,primitive:'al'},
+        { name:'img/avatar/pixel-sitting.png' ,primitive:'al'},
+        { name:'img/avatar/football.png',primitive:'dab1'},
+        { name:'img/avatar/pokeball.png',primitive:'dab2'},
+        { name:'img/avatar/pixel-computer.png',primitive:'harden'},
+        { name:'img/avatar/pixel-computer.png',primitive:'harden'}
     ];
     // Stop previous audio and play new audio + Play the move with http request
 

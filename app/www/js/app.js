@@ -7,7 +7,7 @@ angular.module('starter', ['ionic','starter.controllers','ngDraggable'])
 
 .run(function($ionicPlatform,$rootScope) {
     // Declare default avatar and title-image and username
-    $rootScope.avatar="img/pixel-sitting.png";
+    $rootScope.avatar="img/avatar/pixel-sitting.png";
     $rootScope.username="Gaby";
     $rootScope.navTitle='<img class="title-image" src="img/primakid-navbar-clean.png" height="65px"   width ="125px"/>';
 
