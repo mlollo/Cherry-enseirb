@@ -1,9 +1,10 @@
 package cherry.apphandlers.web;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import javax.websocket.server.PathParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,7 +68,7 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	@RequestMapping("/behave")
 	public Poppy appBehave(@RequestParam(value="name") String behaveStr,@RequestParam(value="id", required = false, defaultValue = "null") String name) 
 	{
-			String info = "\n I played the following behave: " + behaveStr;
+			String info = "I played the following behave : " + behaveStr;
 			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
 			Robot robot = new Robot();
 			if(name.equals("null"))
@@ -93,9 +95,23 @@ private static Logger logger = Logger.getLogger(TestController.class);
     }
 	
 	@CrossOrigin
-	@RequestMapping(value = "/chore", method = RequestMethod.POST)
-	public Poppy appChore(@RequestParam(value="list") JSONObject jsonPrim,@RequestParam(value="id", required = false, defaultValue = "null") String name) 
-	{
+	@RequestMapping(value = "/chore", method = RequestMethod.POST, consumes = "application/json")
+	public Poppy appChore(HttpServletRequest req, HttpServletResponse res)
+	        throws ServletException, IOException 
+	{		
+			 /*Retrieve post data to JSONObject*/
+			 StringBuffer jb = new StringBuffer();
+			  String line = null;
+			  try {
+			    BufferedReader reader = req.getReader();
+			    while ((line = reader.readLine()) != null)
+			      jb.append(line);
+			  } catch (Exception e) { /*report an error*/ }
+
+			JSONObject jsonObject = new JSONObject(jb.toString());
+			String name = (String) jsonObject.get("id");
+
+			/*Retrieve robot in robotList*/
 			String info = "\n I a set of behave. ";
 			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
 			Robot robot = new Robot();
@@ -110,18 +126,22 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	        	    }
 	        	}
 			}
+			
+			/*If robot is not moving set a list of primitives and launch the first one*/
 			if(!LaunchPresentation.isPresentationRunning && !robot.getIsMoving())
 			{
-				@SuppressWarnings("unchecked")
-				List<String> primList = (List<String>) jsonPrim.get("primitive");
-				robot.setPrimList(primList);
-				logger.info("Begin of chore with a set of " + primList.size() + " primitives.");
+				JSONArray arr = jsonObject.getJSONArray("list");
+				robot.setPrimList(new ArrayList<String>());
+				for(int i = 0; i < arr.length(); i++){
+				    robot.getPrimList().add(arr.getString(i));
+				}
+				logger.info("Begin of chore with a set of " + robot.getPrimList().size() + " primitives.");
 				Iterator<String> primIt = robot.getPrimList().iterator();
 				if(primIt.hasNext()){
 					String primitive = primIt.next();
-					logger.info("Play behavior :" + primitive);
 					robot.setIsMoving(true);
 					LaunchPrimitive.startBehaviorPrimitive(primitive,robot.getIp());
+					logger.info("I played the following behave : " + primitive);
 				}else{
 					robot.setIsMoving(false);
 					logger.info("List of primitives is empty.");
@@ -141,17 +161,13 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	{
 			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
 			Robot robot = new Robot();
-			if(name.equals("null"))
-				robot = robotIdx.next();
-			else{
-				while (robotIdx.hasNext()) {
-	        	    Robot currentRobot = robotIdx.next();
-	        	    if(currentRobot.getName().equals(name)){
-	        	    	robot = currentRobot;
-	        	    	break;
-	        	    }
-	        	}
-			}
+			while (robotIdx.hasNext()) {
+        	    Robot currentRobot = robotIdx.next();
+        	    if(currentRobot.getName().equals(name)){
+        	    	robot = currentRobot;
+        	    	break;
+        	    }
+        	}
 			JSONObject json = new JSONObject();
 			if(!LaunchPresentation.isPresentationRunning && !robot.getIsMoving())
 			{

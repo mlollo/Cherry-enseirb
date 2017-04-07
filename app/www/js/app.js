@@ -6,9 +6,10 @@
 angular.module('starter', ['ionic','starter.controllers','ngDraggable'])
 
 .run(function($ionicPlatform,$rootScope) {
-    // Declare default avatar and title-image
+    // Declare default avatar and title-image and username
     $rootScope.avatar="img/pixel-sitting.png";
-    $rootScope.navTitle='<img class="title-image" src="img/primakid-navbar-clean.png" height="65px"   width ="115px"/>';
+    $rootScope.username="Gaby";
+    $rootScope.navTitle='<img class="title-image" src="img/primakid-navbar-clean.png" height="65px"   width ="125px"/>';
 
 
     $ionicPlatform.ready(function() {
@@ -33,40 +34,40 @@ angular.module('starter', ['ionic','starter.controllers','ngDraggable'])
 
 
 
-    .state('index', {
+    .state('home', {
         url: '/home',
-        templateUrl: '/html/home.html',
+        templateUrl: 'html/home.html',
         controller: 'HomeCtrl'
     })
 
     .state('weather', {
         url: '/weather',
-        templateUrl: '/html/weather.html',
+        templateUrl: 'html/weather.html',
         controller: 'WeatherCtrl'
     })
 
     .state('account', {
         url: '/account',
-        templateUrl: '/html/account.html',
+        templateUrl: 'html/account.html',
         controller: 'AccountCtrl'
     })
 
     .state('avatar', {
         url: '/avatar',
-        templateUrl: '/html/avatar.html',
+        templateUrl: 'html/avatar.html',
         controller: 'AvatarCtrl'
 
     })
 
     .state('choregraphy', {
         url: '/choregraphy',
-        templateUrl: '/html/choregraphy.html',
+        templateUrl: 'html/choregraphy.html',
         controller: 'ChoregraphyCtrl'
     })
 
     .state('moves', {
         url: '/moves',
-        templateUrl: '/html/moves.html',
+        templateUrl: 'html/moves.html',
         controller: 'MovesCtrl'
     })
 

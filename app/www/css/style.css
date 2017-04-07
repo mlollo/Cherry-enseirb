@@ -167,10 +167,10 @@ ul.draggable-objects:after {
 
 /* Navbar css*/
 .mynavbar{
-  height: 60px !important;
+    height: 60px !important;
 }
 .bar .button.button-icon:before, .bar .button .icon:before, .bar .button.icon:before, .bar .button.icon-left:before, .bar .button.icon-right:before, .bar button.button-icon:before, .bar button .icon:before, .bar button.icon:before, .bar button.icon-left:before, .bar button.icon-right:before {
-  font-size:50px !important;
+    font-size:50px !important;
 }
 .has-header{
     top:60px;
@@ -183,5 +183,14 @@ ul.draggable-objects:after {
     padding-top: 2px;
     padding-bottom: 2px;
     height: 60px;
-
+}
+h1.Welcoming-title {
+    color: #11c1f3;
+    font-family: 'Righteous', 'Arial';
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 60px;
+    text-shadow: 2px 2px 0 #444,
+    margin: 0px 0 10px;
+    text-align: center;
 }

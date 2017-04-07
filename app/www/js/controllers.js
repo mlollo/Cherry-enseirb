@@ -24,7 +24,7 @@ angular.module('starter.controllers', [])
         { src:'img/links--drawing.jpg', title:'Mouvements', link:'#/moves'},
     ];
     $scope.line2= [
-        { src:'img/links--gaming.jpg', title:'Jeux', link:'#/home'},
+        { src:'img/background/numbers2.jpg', title:'Calculatrice', link:'#/home'},
         { src:'img/links--drawing.jpg', title:'Jeux', link:'#/home'},
         { src:'img/links--gaming.jpg', title:'Jeux', link:'#/home'},
     ];
@@ -49,7 +49,6 @@ angular.module('starter.controllers', [])
     $scope.onTap = function (evt) {
         $scope.imageAvatar = $scope.avatars[evt];
         $rootScope.$broadcast("onTap", $scope.imageAvatar );
-
     }
 
     $scope.$on("onTap", function (evt, data) {
@@ -177,10 +176,36 @@ angular.module('starter.controllers', [])
         { name:'img/pixel-computer.png',primitive:'harden'}
     ];
     // Stop previous audio and play new audio + Play the move with http request
+
     $scope.playAudio = function() {
+        $http.get("http://localhost:8080/app/kevin/ismoving").success(function(response){
+        	$scope.isMoving = response.isMoving;
+        });
+		if ($scope.isMoving == "false"){
+		  var data = {
+		    id : "kevin",
+		   	list : [
+		      $scope.droppedObjects1[0].primitive,
+		      $scope.droppedObjects2[0].primitive,
+		      $scope.droppedObjects3[0].primitive,
+		      $scope.droppedObjects4[0].primitive,
+		   ]
+		  }
+		  console.log(data);
+		  $http.post("http://localhost:8080/app/chore", data);
+		  audio.pause();
+		  audio = new Audio($scope.music);
+		  audio.play();
+
+		}
+
+
+/*
         audio.pause();
         audio = new Audio($scope.music);
+
         audio.play();
+
 
         $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects1[0].primitive);
 
@@ -192,9 +217,8 @@ angular.module('starter.controllers', [])
         }, 10000);
         $timeout(function () {
             $http.get("http://localhost:8080/test/behave?name=" + $scope.droppedObjects4[0].primitive);
-        }, 15000);
+        }, 15000);*/
     };
-
     $scope.setMusic1 = function() {
         $scope.music='/music/Magic_sys_FOU.mp3';
         $scope.music1Disabled = true;
