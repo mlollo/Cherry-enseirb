@@ -31,21 +31,21 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AvatarCtrl',function($scope,$http,$rootScope){
+
+.controller('AvatarCtrl',function($scope,$rootScope,$http){
 
 
-    $scope.avatars = [
-        "img/basketball.png",
-        "img/pikachu.png",
-        "img/pokeball.png",
-        "img/football.png",
-        "img/pixel-win.png",
-        "img/pixel.png",
-        "img/pixel-sitting.png",
-        "img/pixel-love.png",
-        "img/pixel-computer.png",
-    ]
-    $scope.imageAvatar = "img/pixel-sitting.png";
+
+
+  $http.get('data/avatar.json').success(function (data) {
+      $scope.avatars = data.url;
+  })
+
+
+
+
+    $scope.imageAvatar = "img/avatar/pixel-sitting.png";
+
 
     $scope.onTap = function (evt) {
         $scope.imageAvatar = $scope.avatars[evt];
@@ -259,7 +259,6 @@ angular.module('starter.controllers', [])
         $scope.moves = data.moves;
     })
 
-    // Stop previous audio and play new audio + Play the move with http request
 
     $scope.playAudio = function() {
 

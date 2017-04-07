@@ -1,8 +1,7 @@
 {
 	"moves": [
-					{ "name":"img/pixel-sitting.png" ,"primitive":"al"},
-					{ "name":"img/football.png","primitive":"dab1"},
-					{ "name":"img/pokeball.png","primitive":"dab2"},
-					{ "name":"img/pixel-computer.png","primitive":"harden"}
+					{ "name":"img/avatar/pixel-sitting.png" ,"primitive":"al"},
+					{ "name":"img/avatar/football.png","primitive":"rob"},
+					{ "name":"img/avatar/pokeball.png","primitive":"dab2"}
 	]
 }
