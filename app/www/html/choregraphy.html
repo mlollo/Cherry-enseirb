@@ -18,41 +18,41 @@
     <ion-content class="padding">
 
         <h1 class="Welcoming-title">Welcome to choregraphy PAGE</h1>
-        <p>
-            <h3>Choisi ta musique</h3>
-            <button class=" button button-positive" ng-disabled="music1Disabled" ng-click="setMusic1()">Magic system - Tu est fou !</button>
-            <button class="button button-positive" ng-disabled="music2Disabled" ng-click="setMusic2()">Steam Phunk - Feelings</button>
-            <button class="button button-positive" ng-disabled="music3Disabled" ng-click="setMusic3()">Bad pitched - Insanelike</button>
+        <div class="container">
+            <p>
+                <h3>Choisi ta musique</h3>
+                <button class=" button button-positive" ng-disabled="music1Disabled" ng-click="setMusic1()">Magic system - Tu est fou !</button>
+                <button class="button button-positive" ng-disabled="music2Disabled" ng-click="setMusic2()">Steam Phunk - Feelings</button>
+                <button class="button button-positive" ng-disabled="music3Disabled" ng-click="setMusic3()">Bad pitched - Insanelike</button>
 
-        </p>
+            </p>
 
-        <p>
-            <h3>Choisi tes mouvements et fait danser poppy !</h3>
-            <!-- Drag and Drop -->
-            <div class="container">
+            <p>
+                <h3>Choisi tes mouvements et fait danser poppy !</h3>
+                <!-- Drag and Drop -->
+                <div class="container">
 
-                <!-- Draggable objects -->
-                <ul class="draggable-objects">
-                    <div ng-repeat='move in moves' >
-                        <li ng-if="true">
-                            <div ng-drag="true" ng-drag-data="{{move}}" data-allow-transform="true">
-                                <img ng-src="{{move.name}}" width="80" height="80">
-                            </div>
-                        </li>
-                    </div>
-                </ul>
+                    <!-- Draggable objects -->
+                    <ul class="draggable-objects">
+                        <div ng-repeat='move in moves' >
+                            <li ng-if="true">
+                                <div ng-drag="true" ng-drag-data="{{move}}" data-allow-transform="true">
+                                    <img ng-src="{{move.name}}" width="80" height="80">
+                                </div>
+                            </li>
+                        </div>
+                    </ul>
 
-            </div>
+                </div>
 
-            <div class="row">
                 <!-- Dropzones -->
                 <div class="row">
                     <div class="col">
                         <div ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
                             <span class="title">Move #1</span>
 
-                            <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}" >
-                                <img ng-src="{{obj.name}}" width="80" height="80">
+                            <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}" class="dropObj">
+                                <img ng-src="{{obj.name}}" width="80" height="80"class="droppedObj">
 
                             </div>
                         </div>
@@ -63,8 +63,8 @@
                         <div ng-drop="true" ng-drop-success="onDropComplete2($data,$event)">
                             <span class="title">Move #2</span>
 
-                            <div ng-repeat="obj in droppedObjects2" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess2($data,$event)" ng-center-anchor="{{centerAnchor}}">
-                                <img ng-src="{{obj.name}}" width="80" height="80">
+                            <div ng-repeat="obj in droppedObjects2" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess2($data,$event)" ng-center-anchor="{{centerAnchor}}" class="dropObj">
+                                <img ng-src="{{obj.name}}" width="80" height="80" class="droppedObj">
                             </div>
                         </div>
                     </div>
@@ -94,18 +94,17 @@
 
                     <!--Play button -->
                     <div class="col">
-                        <button class="button center" ng-disabled="isDisabled" ng-click="playAudio();disableButton()">
+                        <button class="button center playbutton" ng-disabled="isDisabled" ng-click="playAudio();disableButton()">
                             <img border="0" alt="PlayButton" src="img/play_red.png" width="98" height="98">
                         </button>
                     </div>
                 </div>
 
 
-            </div>
-
+                
+            </p>
         </div>
-    </p>
 
 
-</ion-content>
+    </ion-content>
 </ion-view>

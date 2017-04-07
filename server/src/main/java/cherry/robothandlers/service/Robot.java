@@ -10,6 +10,8 @@ public class Robot {
 	private boolean isSpeaking;
 	private boolean isMoving;
 	private List<String> primList;
+	private List<String> speechList;
+
 
 	//@PersistenceConstructor
 	public Robot(){
@@ -18,8 +20,25 @@ public class Robot {
 		isSpeaking = false;
 		isMoving = false;
 		setPrimList(new ArrayList<String>());
+		setSpeechList(new ArrayList<String>());
 	}
 	
+	public List<String> getSpeechList() {
+		return speechList;
+	}
+
+	public void setSpeechList(List<String> speechList) {
+		this.speechList = speechList;
+	}
+
+	public void setSpeaking(boolean isSpeaking) {
+		this.isSpeaking = isSpeaking;
+	}
+
+	public void setMoving(boolean isMoving) {
+		this.isMoving = isMoving;
+	}
+
 	public String getIp() {
 		return ip;
 	}

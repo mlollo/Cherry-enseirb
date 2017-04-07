@@ -1,8 +1,8 @@
 package cherry.robothandlers.service;
 
 
-
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 //import cherry.gamehandlers.service.ToWebsite;
 import cherry.robothandlers.web.SetupController;
@@ -110,6 +110,21 @@ public class LaunchPrimitive {
 		}	
   	
 	}
+	
+	// Method to start "speak" primitive
+		public static void startSpeakPrimitive(String txt, String url){
+			
+			JSONObject json = new JSONObject();
+			json.accumulate("text", txt);
+
+			try {
+				logger.info("Start Speak Primitive");
+				HttpConnection.sendPost(url + "/primitive/say_fr/method/start/args.json",json.toString());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	
 	// Waiting for all robots to stop speaking
 	public static void waitForSpeakToStop(){
