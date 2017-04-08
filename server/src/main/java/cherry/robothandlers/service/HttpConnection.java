@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 public class HttpConnection {
 
@@ -109,5 +111,32 @@ public class HttpConnection {
 
 
 	}
+	// HTTP POST request
+		public static void sendPostJson(String url,JSONObject json) throws IOException {
+
+			String USER_AGENT = "Mozilla/5.0";
+
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+			//add request header
+			con.setRequestMethod("POST");
+			con.setRequestProperty("User-Agent", USER_AGENT);
+			con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+			con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+			con.setRequestProperty("Accept", "application/json");
+			
+	
+			
+			// Send post request
+			con.setDoOutput(true);
+			//logger.info("Response code from " + url + " : " + con.getContent().toString());
+			
+			OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+			wr.write(json.toString());
+			wr.flush();
+			wr.close();
+
+		}
 
 }

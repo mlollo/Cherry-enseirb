@@ -36,13 +36,13 @@ public class RobotController {
 		}
 		
 		if(!robot.getName().equals("null")){
-			logger.info("Robot finished behave.");
+			logger.info("Robot finish to Speak.");
 			Iterator<String> speechIt = robot.getSpeechList().iterator();
 			if(speechIt.hasNext()){
 				String speech = speechIt.next();
 				robot.setIsSpeaking(true);
-				LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp());
 				logger.info("I speak the following text : " + speech);
+				LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp());
 				speechIt.remove();
 			}else{
 				robot.setIsSpeaking(false);
