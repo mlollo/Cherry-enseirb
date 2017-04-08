@@ -4,14 +4,10 @@ import requests
 
 import pypot.primitive
 
-class Rest(pypot.primitive.Primitive):
+class Off(pypot.primitive.Primitive):
 
 	def run(self):
 		for m in self.robot.motors:
-			m.compliant = False
-			m.goal_position = 0
-
-		for m in self.robot.head:
 			m.compliant = True
 
 	# function that is call once the run function has ended
