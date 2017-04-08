@@ -14,6 +14,8 @@ Robot poppy-torso written in python, offering a rest api & primitives to be used
 - conda install numpy scipy notebook jupyter matplotlib
 
 ### Python depedencies
+
+```
 - backports-abc==0.5
 - bottle==0.12.13
 - certifi==2017.1.23
@@ -38,7 +40,7 @@ Robot poppy-torso written in python, offering a rest api & primitives to be used
 - sympy==1.0
 - tornado==4.4.3
 - zmq==0.0.0
-
+```
 
 ### Any other depedencies (working on a cleaner way)
 - cd poppy/
