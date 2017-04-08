@@ -34,7 +34,8 @@ class Voice(object):
 		try: 
 			requests.post(url, data = {'id':str(name)})
 		except:
-			print "Request error"
+			# print "Request error"
+			pass
 		else:
 			pass
 			# print "Request sent !"
@@ -68,7 +69,8 @@ class Voice(object):
 		try: 
 			requests.post(url, data = {'id':str(name)})
 		except:
-			print "Request error"
+			# print "Request error"
+			pass
 		else:
 			pass
 			# print "Request sent !"

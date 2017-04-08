@@ -58,7 +58,8 @@ class PlayMove(pypot.primitive.Primitive):
 		try: 
 			requests.post(url, data = {'id':str(name)})
 		except:
-			print "Request error"
+			# print "Request error"
+			pass
 		else:
 			# print "Request sent !"
 			pass

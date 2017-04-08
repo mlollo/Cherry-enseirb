@@ -20,7 +20,7 @@ from pypot.primitive.move import MoveRecorder
 
 from primitives.movePlayer import PlayMove
 
-from speak import SayFR, SayEN
+from speak import *
 
 from voice import Voice
 
@@ -57,6 +57,9 @@ class Cherry(AbstractPoppyCreature):
         try:
             cls.robot.attach_primitive(SayFR(cls.robot), 'say_fr')
             cls.robot.attach_primitive(SayEN(cls.robot), 'say_en')
+            cls.robot.attach_primitive(SayES(cls.robot), 'say_es')
+            cls.robot.attach_primitive(SayDE(cls.robot), 'say_de')
+
         except Exception as e:
             print "Something goes wrong with gTTS"
             raise

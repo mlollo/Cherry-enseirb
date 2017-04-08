@@ -6,13 +6,12 @@ Robot poppy-torso written in python, offering a rest api & primitives to be used
 ### Anaconda 2 [Download](https://www.continuum.io/downloads)
 - Install anaconda for **python 2.7** (Poppy python dev version)
 
-### Poppy [Installation doc](https://docs.poppy-project.org/en/installation/install-poppy-softwares.html
+### Poppy [Installation doc](https://docs.poppy-project.org/en/installation/install-poppy-softwares.html)
 - pip install poppy-torso --user -U
 
 #### On windows
 - Before installing poppy-torso, install all basic anaconda package (preferably on an admin command prompt) with :
 - conda install numpy scipy notebook jupyter matplotlib
-
 
 ### Python depedencies
 - backports-abc==0.5
@@ -52,30 +51,44 @@ $ python
 ## Usage
 
 1. cd poppy/
+
+### Basic
 ```
-$ sudo python
->>> import threading
->>> from cherry import Cherry
->>> from pypot.server.httpserver import HTTPRobotServer
-
->>> robot = Cherry.setup('config.json')
-
->>> server = HTTPRobotServer(robot, host='127.0.0.1', port=8080)
-
->>> threading.Thread(target=lambda: server.run()).start()
+$ sudo python -i startup.py
+>>> Cherry.exit()
 ```
 
-### WORK IN PROGRESS ....
+### Medium
 
-## API [source](https://github.com/poppy-project/pypot/blob/master/REST-APIs.md)
+```
+$ sudo python -i startup.py
+>>> robot.<move_primitive>.start()
+>>> robot.<say_primitive>.start(text="some text")
+>>> Cherry.exit()
 
-### Primitives
+```
 
->>>  localhost:8000/primitive/say_fr/method/start/args.json
-#### header
-content-type : application/json
-#### body
-{"text":"Bonjour"}
+### Expert
+
+```
+$ sudo python 
+>>> from cherry import *
+>>> robot=Cherry.setup()
+>>> Cherry.serve()
+>>> Cherry.connect()
+>>> robot.<move_primitive>.start()
+>>> robot.<say_primitive>.start(text="some text")
+>>> Cherry.exit()
+
+```
+
+## API 
+
+### Our implementation
+
+>COMING SOOM !
+
+### Official [source](https://github.com/poppy-project/pypot/blob/master/REST-APIs.md)
 
 |  | HTTP | JSON | Example of answer |
 |-----------------------------------|:-------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------:|
@@ -90,3 +103,67 @@ content-type : application/json
 | Set a primitive property value | POST /primitive/\<prim>/property/<prop>/value.json | {"robot": {"set_primitive_property": {"primitive": "<prim>", "property": "<prop>", "args": {"arg1": "val1", "arg2": "val2", "...": "..."}}}} | {} |
 | Get the primitive methods list | GET /primitive/\<prim>/method/list.json | {"robot": {"get_primitive_methods_list": {"primitive": "<prim>"}}} | {"methods": ["get_tracked_faces", "start", "stop", "pause", "resume"]} |
 | Call a method of a primitive | POST /primitive/\<prim>/method/\<meth>/args.json | {"robot": {"call_primitive_method": {"primitive": "<prim>", "method": "<meth>", "args": {"arg1": "val1", "arg2": "val2", "...": "..."}}}} |  |
+
+## Folder Tree
+
+```
+.
+├── attach_primitive.py 
+├── attach_primitive.pyc
+├── cherry.py
+├── cherry.pyc
+├── config
+│   ├── conf.json
+│   └── torso.json
+├── moves
+│   ├── behave_applause.move
+│   ├── behave_clean.move
+│   ├── behave_dabhard.move
+│   ├── behave_dabsimple.move
+│   ├── behave_eat.move
+│   ├── behave_grisou.move
+│   ├── behave_handsdown.move
+│   ├── behave_handsup.move
+│   ├── behave_harden.move
+│   ├── behave_hello.move
+│   ├── behave_kiss.move
+│   ├── behave_love.move
+│   ├── behave_nope.move
+│   ├── behave_open.move
+│   ├── behave_plane.move
+│   ├── behave_presentationl.move
+│   ├── behave_presentationr.move
+│   ├── behave_punch.move
+│   ├── behave_round.move
+│   ├── behave_showlr.move
+│   ├── behave_shy.move
+│   ├── behave_sleep.move
+│   ├── dance_crazy.move
+│   ├── dance_handsup.move
+│   ├── dance_lr.move
+│   ├── dance_open.move
+│   ├── dance_point.move
+│   ├── dance_showlr.move
+│   ├── dance_snoop.move
+│   ├── dance_speedlr.move
+│   ├── __init__.py
+│   └── __init__.pyc
+├── primitives
+│   ├── idle.py
+│   ├── idle.pyc
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── movePlayer.py
+│   ├── movePlayer.pyc
+│   ├── off.py
+│   ├── off.pyc
+│   ├── rest.py
+│   └── rest.pyc
+├── README.md
+├── speak.py
+├── speak.pyc
+├── startup.py
+├── tmp
+│   └── temp.mp3
+├── voice.py
+└── voice.pyc
