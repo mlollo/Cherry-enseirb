@@ -34,7 +34,7 @@ public class AppController {
 private static Logger logger = Logger.getLogger(TestController.class);
 	
 	@CrossOrigin
-	@RequestMapping(value = "/primitives.json", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/primitives", method = RequestMethod.GET, produces = "application/json")
 	public void appPrimitives(@RequestParam(value="id", required = false, defaultValue = "null") String name, HttpServletRequest req, HttpServletResponse res)
 	        throws ServletException, IOException
 	{
@@ -156,7 +156,7 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	
 	@CrossOrigin
 	@RequestMapping(value = "/{id}/ismoving", method = RequestMethod.GET)
-	public void appChore(@PathParam("id") String name, HttpServletRequest req, HttpServletResponse res)
+	public void appIsMoving(@PathParam("id") String name, HttpServletRequest req, HttpServletResponse res)
 	        throws ServletException, IOException 
 	{
 			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
@@ -258,8 +258,8 @@ private static Logger logger = Logger.getLogger(TestController.class);
 				if(speechIt.hasNext()){
 					String speech = speechIt.next();
 					robot.setIsSpeaking(true);
-					LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp());
 					logger.info("I speak the following text : " + speech);
+					LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp());
 				}else{
 					robot.setIsSpeaking(false);
 					logger.info("List of phrases is empty.");
@@ -270,6 +270,35 @@ private static Logger logger = Logger.getLogger(TestController.class);
 			}
 		    return new Poppy(info);  
     }
+	
+	@CrossOrigin
+	@RequestMapping(value = "/{id}/isspeaking", method = RequestMethod.GET)
+	public void appIsSpeaking(@PathParam("id") String name, HttpServletRequest req, HttpServletResponse res)
+	        throws ServletException, IOException 
+	{
+			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
+			Robot robot = new Robot();
+			while (robotIdx.hasNext()) {
+        	    Robot currentRobot = robotIdx.next();
+        	    if(currentRobot.getName().equals(name)){
+        	    	robot = currentRobot;
+        	    	break;
+        	    }
+        	}
+			JSONObject json = new JSONObject();
+			if(!LaunchPresentation.isPresentationRunning && !robot.getIsSpeaking())
+			{
+				json.append("isSpeaking", false);
+			}
+			else {
+				logger.warn("A presentation or a behave is running. Please retry later");
+				json.append("isSpeaking", true);
+			}
+			res.setContentType(MediaType.APPLICATION_JSON);
+			PrintWriter out = res.getWriter();
+			out.write(json.toString());  
+    }
+	
 	
 	/*@CrossOrigin
 	@RequestMapping("/add/user")

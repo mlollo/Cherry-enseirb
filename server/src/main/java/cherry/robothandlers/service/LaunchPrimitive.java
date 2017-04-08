@@ -119,7 +119,7 @@ public class LaunchPrimitive {
 
 			try {
 				logger.info("Start Speak Primitive");
-				HttpConnection.sendPost(url + "/primitive/say_fr/method/start/args.json",json.toString());
+				HttpConnection.sendPostJson(url + "/primitive/say_fr/method/start/args.json",json);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
