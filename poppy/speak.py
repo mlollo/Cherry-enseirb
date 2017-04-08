@@ -34,7 +34,7 @@ class SayFR(pypot.primitive.Primitive):
 
 		while pygame.mixer.music.get_busy():
 			pass
-		
+			
 		# send the post with the robot name request to the server
 		try: 
 			requests.post(url, data = {'id':str(name)})

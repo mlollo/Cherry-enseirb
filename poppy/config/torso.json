@@ -160,12 +160,12 @@
       "orientation": "indirect"
     },
     "l_shoulder_y": {
-      "offset": 90,
+      "offset": 70,
       "type": "MX-28",
       "id": 41,
       "angle_limit": [
-        -120,
-        155
+        -130,
+        135
       ],
       "orientation": "direct"
     }

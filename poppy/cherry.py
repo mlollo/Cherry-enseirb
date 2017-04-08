@@ -51,7 +51,7 @@ class Cherry(AbstractPoppyCreature):
         for m in cls.robot.motors:
             m.compliant_behavior = 'dummy'
             m.goto_behavior = 'minjerk'
-            m.moving_speed = 70
+            m.moving_speed = 80
         
         for m in cls.robot.motors:
             m.compliant = False
@@ -129,9 +129,14 @@ class Cherry(AbstractPoppyCreature):
     
     @classmethod
     def learn(cls):
-        move = MoveRecorder(cls.robot,50,cls.robot.motors)
+        move = MoveRecorder(cls.robot,100,cls.robot.motors)
         cls.robot.compliant = True
         raw_input("Press any key to start recording a Move.")
+        
+        for x in xrange(3,0,-1):
+            print x
+            time.sleep(1)
+
         move.start()
         raw_input("Press again to stop the recording.")
         move.stop()
@@ -168,7 +173,7 @@ class Cherry(AbstractPoppyCreature):
             
     @classmethod
     def forget(cls,move_name):
-        raw_input("Are you sure ? Press any key to deletethis move")
+        raw_input("Are you sure ? Press any key to delete this move")
         try:
             os.remove("./moves/"+move_name+".move")
         except Exception as e:
@@ -177,6 +182,12 @@ class Cherry(AbstractPoppyCreature):
             print move_name+" successfully forgotten !"
         finally:
             pass
+
+    @classmethod
+    def exit(cls):
+        print "Exiting Cherry server process"
+        os.system("sudo kill `sudo lsof -t -i:8000`")
+
 
 
 

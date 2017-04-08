@@ -34,9 +34,9 @@ class PlayMove(pypot.primitive.Primitive):
 		el = time.time() - t
 
 		# taking into account the movement time in itself (pos_number * framerate)
-		md = movey.duration()
+		md = movey.duration()-0.3
 		time.sleep(md) # sleeping the wanted duration
-		print 'Primitive ', self.move, ' finished in ', el+md, 'secondes.' 
+		# print 'Primitive ', self.move, ' finished in ', el+md, 'secondes.' 
 
 
 	# function that is call once the run function has ended
@@ -60,7 +60,8 @@ class PlayMove(pypot.primitive.Primitive):
 		except:
 			print "Request error"
 		else:
-			print "Request sent !"
+			# print "Request sent !"
+			pass
 		finally:
 			pass
 
