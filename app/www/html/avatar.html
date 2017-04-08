@@ -25,13 +25,15 @@
 
 
 
-        <div class="row" >
-            <div ng-repeat='avatar in avatars' class="col col-top">
+        <div ng-repeat=" n in [0,1,2,3,4,5]" class="row" >
+            <div ng-repeat="avatar in avatars" class="col col-top" ng-if="n*10 <= $index && $index < (n+1)*10 ">
                 <button class="avatar-button" name="button">
                     <img id="{{$index}}" ng-src={{avatar}} width="125%" ng-click="onTap({{$index}})" ng-model='imageAvatar' >
                 </button>
             </div>
-      </div>
+        </div>
+
+
 
     </ion-content>
 </ion-view>

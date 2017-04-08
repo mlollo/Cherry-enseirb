@@ -135,7 +135,7 @@ private static Logger logger = Logger.getLogger(TestController.class);
 				for(int i = 0; i < arr.length(); i++){
 				    robot.getPrimList().add(arr.getString(i));
 				}
-				logger.info("Begin of chore with a set of " + robot.getPrimList().size() + " primitives.");
+				logger.info("Begin of a choregraphy with a set of " + robot.getPrimList().size() + " primitives.");
 				Iterator<String> primIt = robot.getPrimList().iterator();
 				if(primIt.hasNext()){
 					String primitive = primIt.next();
@@ -181,6 +181,96 @@ private static Logger logger = Logger.getLogger(TestController.class);
 			PrintWriter out = res.getWriter();
 			out.write(json.toString());  
     }
+	
+	@CrossOrigin
+	@RequestMapping("/speak")
+	public Poppy appSpeak(@RequestParam(value="text") String text,@RequestParam(value="id", required = false, defaultValue = "null") String name) 
+	{
+			String info = "I speak the following text : " + text;
+			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
+			Robot robot = new Robot();
+			if(name.equals("null"))
+				robot = robotIdx.next();
+			else{
+				while (robotIdx.hasNext()) {
+	        	    Robot currentRobot = robotIdx.next();
+	        	    if(currentRobot.getName().equals(name)){
+	        	    	robot = currentRobot;
+	        	    	break;
+	        	    }
+	        	}
+			}
+			if(!LaunchPresentation.isPresentationRunning && !robot.getIsSpeaking())
+			{
+				logger.info(robot.getName() + " can play the speech");
+				robot.setIsSpeaking(true);
+				LaunchPrimitive.startSpeakPrimitive(text,robot.getIp());
+			}
+			else {
+				logger.warn("A presentation or a behave is running. Please retry later");
+			}
+		    return new Poppy(info);  
+    }
+	
+	@CrossOrigin
+	@RequestMapping(value = "/speech", method = RequestMethod.POST, consumes = "application/json")
+	public Poppy appSpeech(HttpServletRequest req, HttpServletResponse res)
+	        throws ServletException, IOException 
+	{		
+			 /*Retrieve post data to JSONObject*/
+			 StringBuffer jb = new StringBuffer();
+			  String line = null;
+			  try {
+			    BufferedReader reader = req.getReader();
+			    while ((line = reader.readLine()) != null)
+			      jb.append(line);
+			  } catch (Exception e) { /*report an error*/ }
+
+			JSONObject jsonObject = new JSONObject(jb.toString());
+			String name = (String) jsonObject.get("id");
+
+			/*Retrieve robot in robotList*/
+			String info = "\n I a set of behave. ";
+			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
+			Robot robot = new Robot();
+			if(name.equals("null"))
+				robot = robotIdx.next();
+			else{
+				while (robotIdx.hasNext()) {
+	        	    Robot currentRobot = robotIdx.next();
+	        	    if(currentRobot.getName().equals(name)){
+	        	    	robot = currentRobot;
+	        	    	break;
+	        	    }
+	        	}
+			}
+			
+			/*If robot is not moving set a list of primitives and launch the first one*/
+			if(!LaunchPresentation.isPresentationRunning && !robot.getIsSpeaking())
+			{
+				JSONArray arr = jsonObject.getJSONArray("list");
+				robot.setSpeechList(new ArrayList<String>());
+				for(int i = 0; i < arr.length(); i++){
+				    robot.getSpeechList().add(arr.getString(i));
+				}
+				logger.info("Begin of a speech with a set of " + robot.getSpeechList().size() + " phrases.");
+				Iterator<String> speechIt = robot.getSpeechList().iterator();
+				if(speechIt.hasNext()){
+					String speech = speechIt.next();
+					robot.setIsSpeaking(true);
+					LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp());
+					logger.info("I speak the following text : " + speech);
+				}else{
+					robot.setIsSpeaking(false);
+					logger.info("List of phrases is empty.");
+				}
+			}
+			else {
+				logger.warn("A presentation or a behave is running. Please retry later");
+			}
+		    return new Poppy(info);  
+    }
+	
 	/*@CrossOrigin
 	@RequestMapping("/add/user")
 	public String appAddUser(
