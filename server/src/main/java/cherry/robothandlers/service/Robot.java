@@ -2,6 +2,7 @@ package cherry.robothandlers.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 //@Document(collection="robot")
 public class Robot {
 	//@Id
@@ -44,6 +45,8 @@ public class Robot {
 	}
 	public void setIp(String ip) {
 		this.ip = "http://" + ip + ":8000";
+		//test
+		//this.ip = ip;
 	}
 	public String getName() {
 		return name;
@@ -75,8 +78,6 @@ public class Robot {
 	public void setPrimList(List<String> primList) {
 		this.primList = primList;
 	}  
-
-
 	
 	@Override
     public String toString()

@@ -39,19 +39,8 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	        throws ServletException, IOException
 	{
 			String info = new String();
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			if(name.equals("null"))
-				robot = robotIdx.next();
-			else{
-				while (robotIdx.hasNext()) {
-	        	    Robot currentRobot = robotIdx.next();
-	        	    if(currentRobot.getName().equals(name)){
-	        	    	robot = currentRobot;
-	        	    	break;
-	        	    }
-	        	}
-			}
+			Robot robot = SetupController.getRobot(name);
+
 			
 			if(!robot.getName().equals("null")){
 				logger.info("Get all primitives");
@@ -69,24 +58,15 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	public Poppy appBehave(@RequestParam(value="name") String behaveStr,@RequestParam(value="id", required = false, defaultValue = "null") String name) 
 	{
 			String info = "I played the following behave : " + behaveStr;
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			if(name.equals("null"))
-				robot = robotIdx.next();
-			else{
-				while (robotIdx.hasNext()) {
-	        	    Robot currentRobot = robotIdx.next();
-	        	    if(currentRobot.getName().equals(name)){
-	        	    	robot = currentRobot;
-	        	    	break;
-	        	    }
-	        	}
-			}
+			Robot robot = SetupController.getRobot(name);
+
 			if(!LaunchPresentation.isPresentationRunning && !robot.getIsMoving())
 			{
 				logger.info("Play behavior :" + behaveStr);
-				robot.setIsMoving(true);
-				LaunchPrimitive.startBehaviorPrimitive(behaveStr,robot.getIp());
+				if(behaveStr.equals("rest") || behaveStr.equals("off"))
+					LaunchPrimitive.stopPrimitive(behaveStr,robot.getIp());
+				if(LaunchPrimitive.startBehaviorPrimitive(behaveStr,robot.getIp()) == 0)
+					robot.setIsMoving(true);
 			}
 			else {
 				logger.warn("A presentation or a behave is running. Please retry later");
@@ -113,19 +93,7 @@ private static Logger logger = Logger.getLogger(TestController.class);
 
 			/*Retrieve robot in robotList*/
 			String info = "\n I a set of behave. ";
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			if(name.equals("null"))
-				robot = robotIdx.next();
-			else{
-				while (robotIdx.hasNext()) {
-	        	    Robot currentRobot = robotIdx.next();
-	        	    if(currentRobot.getName().equals(name)){
-	        	    	robot = currentRobot;
-	        	    	break;
-	        	    }
-	        	}
-			}
+			Robot robot = SetupController.getRobot(name);
 			
 			/*If robot is not moving set a list of primitives and launch the first one*/
 			if(!LaunchPresentation.isPresentationRunning && !robot.getIsMoving())
@@ -139,9 +107,12 @@ private static Logger logger = Logger.getLogger(TestController.class);
 				Iterator<String> primIt = robot.getPrimList().iterator();
 				if(primIt.hasNext()){
 					String primitive = primIt.next();
-					robot.setIsMoving(true);
-					LaunchPrimitive.startBehaviorPrimitive(primitive,robot.getIp());
+					if(primitive.equals("rest") || primitive.equals("off"))
+						LaunchPrimitive.stopPrimitive(primitive,robot.getIp());
+					if(LaunchPrimitive.startBehaviorPrimitive(primitive,robot.getIp()) == 0)
+						robot.setIsMoving(true);
 					logger.info("I played the following behave : " + primitive);
+					primIt.remove();
 				}else{
 					robot.setIsMoving(false);
 					logger.info("List of primitives is empty.");
@@ -159,15 +130,8 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	public void appIsMoving(@PathParam("id") String name, HttpServletRequest req, HttpServletResponse res)
 	        throws ServletException, IOException 
 	{
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			while (robotIdx.hasNext()) {
-        	    Robot currentRobot = robotIdx.next();
-        	    if(currentRobot.getName().equals(name)){
-        	    	robot = currentRobot;
-        	    	break;
-        	    }
-        	}
+			Robot robot = SetupController.getRobot(name);
+
 			JSONObject json = new JSONObject();
 			if(!LaunchPresentation.isPresentationRunning && !robot.getIsMoving())
 			{
@@ -181,39 +145,10 @@ private static Logger logger = Logger.getLogger(TestController.class);
 			PrintWriter out = res.getWriter();
 			out.write(json.toString());  
     }
+
 	
 	@CrossOrigin
-	@RequestMapping("/speak")
-	public Poppy appSpeak(@RequestParam(value="text") String text,@RequestParam(value="id", required = false, defaultValue = "null") String name) 
-	{
-			String info = "I speak the following text : " + text;
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			if(name.equals("null"))
-				robot = robotIdx.next();
-			else{
-				while (robotIdx.hasNext()) {
-	        	    Robot currentRobot = robotIdx.next();
-	        	    if(currentRobot.getName().equals(name)){
-	        	    	robot = currentRobot;
-	        	    	break;
-	        	    }
-	        	}
-			}
-			if(!LaunchPresentation.isPresentationRunning && !robot.getIsSpeaking())
-			{
-				logger.info(robot.getName() + " can play the speech");
-				robot.setIsSpeaking(true);
-				LaunchPrimitive.startSpeakPrimitive(text,robot.getIp());
-			}
-			else {
-				logger.warn("A presentation or a behave is running. Please retry later");
-			}
-		    return new Poppy(info);  
-    }
-	
-	@CrossOrigin
-	@RequestMapping(value = "/speech", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/speech", method = RequestMethod.POST, consumes = "application/json; charset=UTF-8")
 	public Poppy appSpeech(HttpServletRequest req, HttpServletResponse res)
 	        throws ServletException, IOException 
 	{		
@@ -231,19 +166,8 @@ private static Logger logger = Logger.getLogger(TestController.class);
 
 			/*Retrieve robot in robotList*/
 			String info = "\n I a set of behave. ";
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			if(name.equals("null"))
-				robot = robotIdx.next();
-			else{
-				while (robotIdx.hasNext()) {
-	        	    Robot currentRobot = robotIdx.next();
-	        	    if(currentRobot.getName().equals(name)){
-	        	    	robot = currentRobot;
-	        	    	break;
-	        	    }
-	        	}
-			}
+			Robot robot = SetupController.getRobot(name);
+
 			
 			/*If robot is not moving set a list of primitives and launch the first one*/
 			if(!LaunchPresentation.isPresentationRunning && !robot.getIsSpeaking())
@@ -257,9 +181,11 @@ private static Logger logger = Logger.getLogger(TestController.class);
 				Iterator<String> speechIt = robot.getSpeechList().iterator();
 				if(speechIt.hasNext()){
 					String speech = speechIt.next();
-					robot.setIsSpeaking(true);
-					logger.info("I speak the following text : " + speech);
-					LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp());
+					if(LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp()) == 0){
+						robot.setIsSpeaking(true);
+						logger.info("I speak the following text : " + speech);
+					}
+					speechIt.remove();
 				}else{
 					robot.setIsSpeaking(false);
 					logger.info("List of phrases is empty.");
@@ -276,15 +202,8 @@ private static Logger logger = Logger.getLogger(TestController.class);
 	public void appIsSpeaking(@PathParam("id") String name, HttpServletRequest req, HttpServletResponse res)
 	        throws ServletException, IOException 
 	{
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			while (robotIdx.hasNext()) {
-        	    Robot currentRobot = robotIdx.next();
-        	    if(currentRobot.getName().equals(name)){
-        	    	robot = currentRobot;
-        	    	break;
-        	    }
-        	}
+			Robot robot = SetupController.getRobot(name);
+
 			JSONObject json = new JSONObject();
 			if(!LaunchPresentation.isPresentationRunning && !robot.getIsSpeaking())
 			{
