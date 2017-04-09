@@ -25,16 +25,32 @@ public class LaunchPrimitive {
 	}
 	
 	// Method to start "behave" primitives with a robot targeted
-		public static void startBehaviorPrimitive(String behavior, String url){
+		public static int startBehaviorPrimitive(String behavior, String url){
 			
 
 			try {
-				logger.info("Play Behave Primitive : " + behavior);
-				HttpConnection.sendGet(url + "/primitive/" + behavior + "/start.json");
+				int status = 0;
+				try {
+					logger.info("Play Behave Primitive: " + behavior);
+					status = HttpConnection.sendGetCode(SetupController.urlToRobot + "/primitive/" + behavior + "/start.json");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					logger.info("Robot couldn't play behave !");
+				}
+				
+				// If not reachable, robot deleted
+				if(status != 200)
+				{
+					logger.info("Robot send a "+ status +" Http response.");
+				}else{
+					return 0;
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return -1;
 			
 		}
 	
@@ -44,6 +60,18 @@ public class LaunchPrimitive {
 		try {
 			logger.info("Stop Behave Primitive: " + behavior);
 			HttpConnection.sendGet(SetupController.urlToRobot + "/primitive/" + behavior + "/stop.json");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	// Method to stop "behave" primitives
+	public static void stopPrimitive(String behavior, String url){
+		
+		try {
+			logger.info("Stop Behave Primitive: " + behavior);
+			HttpConnection.sendGet(url + "/primitive/" + behavior + "/stop.json");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,18 +140,34 @@ public class LaunchPrimitive {
 	}
 	
 	// Method to start "speak" primitive
-		public static void startSpeakPrimitive(String txt, String url){
+		public static int startSpeakPrimitive(String txt, String url){
 			
 			JSONObject json = new JSONObject();
 			json.accumulate("text", txt);
 
 			try {
-				logger.info("Start Speak Primitive");
-				HttpConnection.sendPostJson(url + "/primitive/say_fr/method/start/args.json",json);
+				int status = 0;
+				try {
+					logger.info("Start speak primitive");
+					status = HttpConnection.sendPostJson(url + "/primitive/say_fr/method/start/args.json",json);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					logger.info("Robot couldn't play speak behave !");
+				}
+				
+				// If not reachable, robot deleted
+				if(status != 200)
+				{
+					logger.info("Robot send a "+ status +" Http response.");
+				}else{
+					return 0;
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return -1;
 		}
 	
 	// Waiting for all robots to stop speaking

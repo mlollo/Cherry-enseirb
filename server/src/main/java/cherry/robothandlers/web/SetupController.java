@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,6 +73,9 @@ public class SetupController {
 		    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
 		        ip = request.getRemoteAddr();  
 		    }  
+		    
+		    //test
+		    //ip = "http://2b22e273.ngrok.io";
 		    
 		    logger.info("New Robot: Name: " + name + " Ip adress: " + ip);
 		    
@@ -139,6 +143,24 @@ public class SetupController {
 			System.out.println("\n Error: " + e);
 		}
 		
+	}
+	
+	
+	public static Robot getRobot(String name){
+		Iterator<Robot> robotIdx = robotList.iterator();
+		Robot robot = new Robot();
+		if(name.equals("null"))
+			robot = robotIdx.next();
+		else{
+			while (robotIdx.hasNext()) {
+        	    Robot currentRobot = robotIdx.next();
+        	    if(currentRobot.getName().equals(name)){
+        	    	robot = currentRobot;
+        	    	break;
+        	    }
+        	}
+		}
+		return robot;
 	}
 
 		

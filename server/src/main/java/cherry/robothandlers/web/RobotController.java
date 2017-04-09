@@ -21,32 +21,21 @@ public class RobotController {
 	@RequestMapping(value = "/speakfinished", method = RequestMethod.POST)
 	public void speakFinished(@RequestParam(value="id", required = false, defaultValue = "null") String name)
 	{	
-		Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-		Robot robot = new Robot();
-		if(name.equals("null"))
-			robot = robotIdx.next();
-		else{
-			while (robotIdx.hasNext()) {
-        	    Robot currentRobot = robotIdx.next();
-        	    if(currentRobot.getName().equals(name)){
-        	    	robot = currentRobot;
-        	    	break;
-        	    }
-        	}
-		}
+		Robot robot = SetupController.getRobot(name);
 		
 		if(!robot.getName().equals("null")){
-			logger.info("Robot finish to Speak.");
+			logger.info("Robot finished to Speak.");
 			Iterator<String> speechIt = robot.getSpeechList().iterator();
 			if(speechIt.hasNext()){
 				String speech = speechIt.next();
-				robot.setIsSpeaking(true);
-				logger.info("I speak the following text : " + speech);
-				LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp());
+				if(LaunchPrimitive.startSpeakPrimitive(speech,robot.getIp()) == 0){
+					robot.setIsSpeaking(true);
+					logger.info("I speak the following text : " + speech);
+				}
 				speechIt.remove();
 			}else{
 				robot.setIsSpeaking(false);
-				logger.info("End of the set of phrases.");
+				logger.info("End of the set of phrases.\n");
 			}
 		}
 	}
@@ -55,32 +44,20 @@ public class RobotController {
 	@RequestMapping(value = "/behavefinished", method = RequestMethod.POST)
 	public void behaveFinished(@RequestParam(value="id", required = false, defaultValue = "null") String name)
 	{
-			Iterator<Robot> robotIdx = SetupController.robotList.iterator();
-			Robot robot = new Robot();
-			if(name.equals("null"))
-				robot = robotIdx.next();
-			else{
-				while (robotIdx.hasNext()) {
-	        	    Robot currentRobot = robotIdx.next();
-	        	    if(currentRobot.getName().equals(name)){
-	        	    	robot = currentRobot;
-	        	    	break;
-	        	    }
-	        	}
-			}
+			Robot robot = SetupController.getRobot(name);
 			
 			if(!robot.getName().equals("null")){
 				logger.info("Robot finished behave.");
 				Iterator<String> primIt = robot.getPrimList().iterator();
 				if(primIt.hasNext()){
 					String primitive = primIt.next();
-					robot.setIsMoving(true);
-					LaunchPrimitive.startBehaviorPrimitive(primitive,robot.getIp());
+					if(LaunchPrimitive.startBehaviorPrimitive(primitive,robot.getIp()) == 0)
+						robot.setIsMoving(true);
 					logger.info("I played the following behave : " + primitive);
 					primIt.remove();
 				}else{
 					robot.setIsMoving(false);
-					logger.info("End of the set of primitives.");
+					logger.info("End of the set of primitives.\n");
 				}
 			}
 	}

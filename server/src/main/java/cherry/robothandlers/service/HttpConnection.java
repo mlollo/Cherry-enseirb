@@ -50,8 +50,41 @@ public class HttpConnection {
 			in.close();
 
 			return response.toString();
+	}
+	
+	// HTTP GET request
+	public static int sendGetCode(String url) throws Exception {
 
+			String USER_AGENT = "Mozilla/5.0";
+			
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
+			
+			// optional default is GET
+			con.setRequestMethod("GET");
+
+			//add request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+			logger.info("Sending 'GET' request to URL : " + url);
+			
+			int responseCode = con.getResponseCode();
+			//System.out.println("\nSending 'GET' request to URL : " + url);
+			//System.out.println("Response Code : " + responseCode);
+			
+			logger.info("Response code from " + url + " : " + responseCode);
+			
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			return responseCode;
 	}
 	
 	// HTTP POST request
@@ -112,7 +145,7 @@ public class HttpConnection {
 
 	}
 	// HTTP POST request
-		public static void sendPostJson(String url,JSONObject json) throws IOException {
+		public static int sendPostJson(String url,JSONObject json) throws IOException {
 
 			String USER_AGENT = "Mozilla/5.0";
 
@@ -137,6 +170,27 @@ public class HttpConnection {
 			wr.flush();
 			wr.close();
 
+			int responseCode = con.getResponseCode();
+			//System.out.println("\nSending 'POST' request to URL : " + url);
+			//System.out.println("Post parameters : " + urlParameters);
+			//System.out.println("Response Code : " + responseCode);
+			
+			logger.info("Sending POST to url: " + url  + " With parameters: " + json.toString());
+			logger.info("Response code from " + url + " : " + responseCode);
+
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			
+			//print result
+			//System.out.println(response.toString());
+			return  responseCode;
 		}
 
 }
